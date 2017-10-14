@@ -54,7 +54,6 @@
                         </script>
                     </div>
                     <input type="hidden" name="_token" value="{{Session::token()}}">
-
                 </div>
             </form>
         </div>

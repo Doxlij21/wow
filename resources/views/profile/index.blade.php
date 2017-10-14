@@ -24,6 +24,9 @@
                                 <li class="profileMenuItem">
                                     <a href="#create static"> Create static </a>
                                 </li>
+                                <li class="profileMenuItem">
+                                    <a href="#create static"> Battle.net account </a>
+                                </li>
                             </ul>
                             {!! csrf_field() !!}
                         </form>
@@ -70,12 +73,69 @@
                                 <label for="staticTitle">Chose static title</label>
                                 <input type="text" name="staticTitle">
                             </div>
+                            <div class="staticCharacter">
+                                <label for="staticCharacter">Select you'r character</label>
+                                <ul id="staticCharacterOpt">
+                                    @foreach($wowresponse->characters as $wowr)
+                                        @if($wowr->level == 110)
+                                            <li style="cursor: pointer">{{$wowr->name}} , {{$wowr->realm}} <img src="https://render-eu.worldofwarcraft.com/character/{{$wowr->thumbnail}}"></li>
+                                        @else
+                                        @endif
+                                    @endforeach
+                                </ul>
+                            </div>
                             <div class="staticUsers">
 
                             </div>
                         </div>
-                        @else
-                            321
+                        @elseif($menuFilter->menu_name == 'Battle.net account')
+                            <form target="_blank" method="get" action="{{route('battlenet.oauth' , \App\User::find(Auth::user()->id)->lang)}}">
+                                <div id="battlenet">
+                                    <div class="region">
+                                        @if($check_token->exp >= time())
+                                            <label for="region" class="control-label">Change you'r region</label>
+                                        @else
+                                            <label for="region" class="control-label">You'r region</label>
+                                        @endif
+                                            <select id="timezone" name="region">
+                                                <option id="region" name="region" value='eu' > Europe </option>
+                                                <option id="region" name="region" value='us' > USA </option>
+                                                <option id="region" name="region" value='apac' > Asia-Pacific </option>
+                                                <option id="region" name="region" value='cn' > China </option>
+                                            </select>
+                                    </div>
+                                    <div>
+                                        <div class="buttons" style="padding: 20px 0;border-top: 1px solid #dad8de;width: 100%;text-align: center;">
+                                            <div class="form-group">
+                                                <button type="submit" name="login" style="width: 71px;height: 32px;" class="primary button">
+                                                    <span style="line-height: 0px !important;" class="js-login-text">
+                                                        @if($check_token->exp >= time())
+                                                            Change
+                                                        @else
+                                                            Bind
+                                                        @endif
+                                                    </span>
+                                                </button>
+                                                <script type="text/javascript">
+                                                    function checkForm(form1)
+                                                    {
+                                                        form1.login.disabled = true;
+                                                        form1.login.value = "Please wait...";
+                                                        return true;
+                                                    }
+                                                </script>
+                                            </div>
+                                            <input type="hidden" name="_token" value="{{Session::token()}}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div>
+                                @if($check_token->exp >= time())
+                                   hello {{$battlenetresponse->battletag}} with id {{$battlenetresponse->id}}
+                                @else
+                                @endif
+                            </div>
                         @endif
                     </div>
                 </div>
