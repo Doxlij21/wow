@@ -1,0 +1,2 @@
+//Сделайте красивую 403 ошибку(когда у человека нету прав на страницу). {{$exception->getMessage()}} можете стереть
+{{$exception->getMessage()}} . sasai bibas mamenjkin хацкер <a href="/">go to home page</a>

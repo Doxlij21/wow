@@ -72,6 +72,10 @@
                         <label style="margin-bottom: 5px;font-weight: 700;color: #575260;font-size: 14px" for="password_confirmation">Password confirmation:</label>
                         <input style="width: 325px;" type="password" name="password_confirmation" class="form-control" id="password_confirmation">
                     </div>
+                    <div class="field" style="margin-bottom: 10px;">
+                        <label style="margin-bottom: 5px;font-weight: 700;color: #575260;font-size: 14px" for="email">Email:</label>
+                        <input style="width: 325px;" type="text" name="email" class="text">
+                    </div>
                 </div>
 
                 <div class="buttons" style="padding: 20px 0;border-top: 1px solid #dad8de;width: 100%;text-align: center;">
