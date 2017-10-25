@@ -1,4 +1,4 @@
-//Сделал на скорую руку, меняйте как хотите.
+//Сделал на скорую руку, меняйте как хотите
 <div id="selectLanguage" style="cursor: pointer">Select you'r language</div>
 <div style="display: none" id="chooseLang">
     //route куда отправляется пост запрос, не трогайте
