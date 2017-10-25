@@ -35,7 +35,29 @@
                             </div>
                         </div>
                     @else
-
+                        @if(count($usercharacters) > 0)
+                                <div onClick="$('.showNoti').toggle()">
+                                    <span style="color: red">{{count($usercharacters)}}</span> new notifications
+                                </div>
+                            <div class="showNoti" style="display: none">
+                                @foreach($usercharacters as $usercharacter)
+                                    <a href="{{route('mark.asread',$usercharacter->id)}}">
+                                        <li>You're character: {{$usercharacter->battlenet_user_character_name}} invited to this static: {{\App\WowStatic::find($usercharacter->static_id)->static_name}}</li>
+                                    </a>
+                                @endforeach
+                            </div>
+                        @else
+                        @endif
+                        {{--@foreach($usercharacters->characters as $usercharacter)--}}
+                            {{--@if(count($usercharacter->noticharacters) > 0)--}}
+                                {{--@foreach($usercharacter->noticharacters as $noticharacter)--}}
+                                    {{--<li>--}}
+                                        {{--You're character {{$noticharacter->static_guests_names}} invited to this static {{\App\WowStatic::find(\App\StaticGuests::find($noticharacter->notifiable_id)->static_id)->static_name}}--}}
+                                    {{--</li>--}}
+                                {{--@endforeach--}}
+                            {{--@else--}}
+                            {{--@endif--}}
+                        {{--@endforeach--}}
                     @endguest
                 </div>
             </div>
