@@ -118,7 +118,7 @@
                                                         <li class="" data-cat-class="Priest">Priest</li>
                                                         <li class="" data-cat-class="Death Knight">Death Knight</li>
                                                         <li class="" data-cat-class="Shaman">Shaman</li>
-                                                        <li class="" data-cat-class="Mage">Mage</>
+                                                        <li class="" data-cat-class="Mage">Mage</li>
                                                         <li class="" data-cat-class="Warlock">Warlock</li>
                                                         <li class="" data-cat-class="Monk">Monk</li>
                                                         <li class="" data-cat-class="Druid">Druid</li>
@@ -126,57 +126,102 @@
                                                     </ul>
                                                 </div>
                                                 <div id="selectCharacters">
-                                                @foreach($filteredguild as $fguild)
-                                                    @if($fguild->character->class == 1)
-                                                        <div class="active" id="Warrior" dataclass="Warrior">
-                                                            <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span style="color: #C79C6E;">{{$fguild->character->name}}</span>
-                                                        </div>
-                                                    @elseif($fguild->character->class == 2)
-                                                        <div class="active" id="Paladin" dataclass="Paladin">
-                                                            <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span style="color: #F58CBA">{{$fguild->character->name}}</span>
-                                                        </div>
-                                                    @elseif($fguild->character->class == 3)
-                                                        <div class="active" id="Hunter" dataclass="Hunter">
-                                                            <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
-                                                        </div>
-                                                    @elseif($fguild->character->class == 4)
-                                                        <div class="active" id="Rogue" dataclass="Rogue">
-                                                            <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
-                                                        </div>
-                                                    @elseif($fguild->character->class == 5)
-                                                        <div class="active" id="Priest" dataclass="Priest">
-                                                            <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
-                                                        </div>
-                                                    @elseif($fguild->character->class == 6)
-                                                        <div class="active" id="Death Knight" dataclass="Death Knight">
-                                                            <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
-                                                        </div>
-                                                    @elseif($fguild->character->class == 7)
-                                                        <div class="active" id="Shaman" dataclass="Shaman">
-                                                            <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
-                                                        </div>
-                                                    @elseif($fguild->character->class == 8)
-                                                        <div class="active" id="Mage" dataclass="Mage">
-                                                            <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
-                                                        </div>
-                                                    @elseif($fguild->character->class == 9)
-                                                        <div class="active" id="Warlock" dataclass="Warlock">
-                                                            <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
-                                                        </div>
-                                                    @elseif($fguild->character->class == 10)
-                                                        <div class="active" id="Monk" dataclass="Monk">
-                                                            <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
-                                                        </div>
-                                                    @elseif($fguild->character->class == 11)
-                                                        <div class="active" id="Druid" dataclass="Druid">
-                                                            <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
-                                                        </div>
-                                                    @elseif($fguild->character->class == 12)
-                                                        <div class="active" id="Demon Hunter" dataclass="Demon Hunter">
-                                                            <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
-                                                        </div>
-                                                    @endif
-                                                @endforeach
+                                                @if(count(request()->class) > 0)
+                                                    @foreach($filteredguild as $fguild)
+                                                            @if($_GET['class'] == 'All')
+                                                                <div>
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox">{{$fguild->character->name}}
+                                                                </div>
+                                                            @else
+                                                            @endif
+                                                        @if($fguild->character->class == 1)
+                                                            @if($_GET['class'] == 'Warrior')
+                                                                <div class="active" id="Warrior" dataclass="Warrior">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span style="color: #C79C6E;">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @else
+                                                            @endif
+                                                        @elseif($fguild->character->class == 2)
+                                                            @if($_GET['class'] == 'Paladin')
+                                                                <div class="active" id="Paladin" dataclass="Paladin">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span style="color: #F58CBA">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @else
+                                                            @endif
+                                                        @elseif($fguild->character->class == 3)
+                                                            @if($_GET['class'] == 'Hunter')
+                                                                <div class="active" id="Hunter" dataclass="Hunter">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
+                                                                </div>
+                                                            @else
+                                                            @endif
+                                                        @elseif($fguild->character->class == 4)
+                                                            @if($_GET['class'] == 'Rogue')
+                                                                <div class="active" id="Rogue" dataclass="Rogue">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
+                                                                </div>
+                                                            @else
+                                                            @endif
+                                                        @elseif($fguild->character->class == 5)
+                                                            @if($_GET['class'] == 'Priest')
+                                                                <div class="active" id="Priest" dataclass="Priest">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
+                                                                </div>
+                                                            @else
+                                                            @endif
+                                                        @elseif($fguild->character->class == 6)
+                                                            @if($_GET['class'] == 'Death Knight')
+                                                                <div class="active" id="Death Knight" dataclass="Death Knight">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
+                                                                </div>
+                                                            @else
+                                                            @endif
+                                                        @elseif($fguild->character->class == 7)
+                                                            @if($_GET['class'] == 'Shaman')
+                                                                <div class="active" id="Shaman" dataclass="Shaman">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
+                                                                </div>
+                                                            @else
+                                                            @endif
+                                                        @elseif($fguild->character->class == 8)
+                                                            @if($_GET['class'] == 'Mage')
+                                                                <div class="active" id="Mage" dataclass="Mage">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
+                                                                </div>
+                                                            @else
+                                                            @endif
+                                                        @elseif($fguild->character->class == 9)
+                                                            @if($_GET['class'] == 'Warlock')
+                                                                <div class="active" id="Warlock" dataclass="Warlock">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
+                                                                </div>
+                                                            @else
+                                                            @endif
+                                                        @elseif($fguild->character->class == 10)
+                                                            @if($_GET['class'] == 'Monk')
+                                                                <div class="active" id="Monk" dataclass="Monk">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
+                                                                </div>
+                                                            @else
+                                                            @endif
+                                                        @elseif($fguild->character->class == 11)
+                                                            @if($_GET['class'] == 'Druid')
+                                                                <div class="active" id="Druid" dataclass="Druid">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
+                                                                </div>
+                                                            @else
+                                                            @endif
+                                                        @elseif($fguild->character->class == 12)
+                                                            @if($_GET['class'] == 'Demon Hunter')
+                                                                <div class="active" id="Demon Hunter" dataclass="Demon Hunter">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
+                                                                </div>
+                                                            @else
+                                                            @endif
+                                                        @endif
+                                                    @endforeach
+                                                @else
+                                                @endif
                                                 </div>
                                                 <input type="hidden" name="_token" value="{{Session::token()}}">
                                                 <div class="buttons" style="padding: 20px 0;border-top: 1px solid #dad8de;width: 100%;text-align: center;">
