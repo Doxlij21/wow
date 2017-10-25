@@ -18,6 +18,7 @@
 <div class="full-wrap">
     <div id="headerMover">
         <header>
+            @include('layouts.lang.lang')
         </header>
         <div id="content" class="indexNews">
             <div class="pageWidth">
@@ -45,5 +46,6 @@
 <footer>
 </footer>
 </body>
+<script src="/js/lang/lang.js"></script>
 <script src="/js/menu/menu.js"></script>
 </html>

@@ -42,6 +42,10 @@
         width: 100%;
     }
 
+    li{
+        list-style-type: none;
+    }
+
     /* Login */
 
     #loginContainer
@@ -145,6 +149,11 @@
     {
         text-decoration: none;
         background-color: rgb(52,52,52);
+    }
+    /* Profile */
+    #staticCharacterOpt li:hover
+    {
+        background: black;
     }
 
     /* Menu */
