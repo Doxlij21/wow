@@ -47,11 +47,6 @@
         list-style-type: none;
     }
 
-
-    #selectCharacters > div
-    {
-        display: none;
-    }
     #selectCharacters .active
     {
         display: block;
