@@ -1,5 +1,5 @@
 <!doctype html>
-<html style="min-width: 1410px; background-color: #69797e;">
+<html>
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="initial-scale=1.0001, minimum-scale=0.7, user-scalable=yes"/>
@@ -8,16 +8,89 @@
     <script src="/js/login/loginWrap.js"></script>
     <script src="/js/login/login.js"></script>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 </head>
 <body>
-<div class="full-wrap">
-    <div id="headerMover">
-        <header>
-        </header>
-        <div id="content" class="indexNews">
-            <div class="pageWidth">
-                <div class="pageContent">
+
+<header>
+    <div id="allmenu">
+        <ul id="gn-menu" class="gn-menu-main">
+            <li class="gn-trigger">
+                <a class="menu-bars">
+                    <i class="fa fa-bars"></i>
+
+                </a>
+            <li id="logo"><a href="#"><img src="/img/profile/logo2.png"></a></li>
+            <div id="Navigation">
+                <ul class="Navigation">
+                    <li><a href="#" class="fa fa-user"></a>
+                        <ul>
+                            <li><a href="#">Profile</a></li>
+                            <li><a href="#">Existing</a></li>
+                            <li><a href="#">Create statiс</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" class="fa fa-envelope-o"></a>
+                        <ul>
+                            <li><a href="#">New</a></li>
+                            <li><a href="#">Archive</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" class="fa fa-calendar"></a></li>
+
+                    <li><a href="#" class="fa fa-globe"></a>
+                        <ul>
+                            <li><a href="#"><img src="/img/profile/eng.jpg">English (en)</a></li>
+                            <li><a href="#"><img src="/img/profile/ru.jpg">Russian (ru)</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <nav class="gn-menu-wrapper">
+                <!-- ... /-->
+                <div class="gn-scroller">
+                    <ul class="gn-menu">
+                        <li class="gn-search-item">
+                            <input placeholder="Search" type="search" class="gn-search">
+                            <a href="#">
+                                <i class="fa fa-search"></i>
+                                <span>Search</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-file-o"></i> Page1
+                            </a>
+                            <ul class="gn-submenu">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-file-o"></i> Page2
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-file-o"></i> Page3
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-cog"></i> Настройки
+                            </a>
+                        </li>
+                        <!-- ... /-->
+                    </ul>
+                </div>
+                <!-- ... /-->
+            </nav>
+
+        </ul>
+    </div>
+</header>
+<content>
+                <div id="content">
                     <div style="float:left;height: 500px;width: 150px;" id="profileMenu">
                         <form class="form" action="{{route('profile.post.menu', $user->id)}}" enctype="multipart/form-data">
                             <ul class="profileMenu">
@@ -110,7 +183,6 @@
                                                 ?>
                                                 <div id="classFilterWrap">
                                                     <ul id="classFilter">
-                                                        <li class="" data-cat-class="All">All</li>
                                                         <li class="" data-cat-class="Warrior"><span style="color: #C79C6E;">Warrior</span></li>
                                                         <li class="" data-cat-class="Paladin"><span style="color: #F58CBA">Paladin</span></li>
                                                         <li class="" data-cat-class="Hunter">Hunter</li>
@@ -123,6 +195,7 @@
                                                         <li class="" data-cat-class="Monk">Monk</li>
                                                         <li class="" data-cat-class="Druid">Druid</li>
                                                         <li class="" data-cat-class="Demon Hunter">Demon Hunter</li>
+                                                        <li class="" data-cat-class="All">All</li>
                                                     </ul>
                                                 </div>
                                                 <div id="selectCharacters">
@@ -321,15 +394,16 @@
                         @endif
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div id="overlays"></div>
-</div>
-<footer>
-</footer>
+</content>
+    <footer>
+    </footer>
 </body>
 <script src="/js/profile/checkform.js"></script>
 <script src="/js/profile/selectcharacter.js"></script>
 <script src="/js/menu/menu.js"></script>
+<script src="/js/profile/classie.js"></script>
+<script src="/js/profile/gnmenu.js"></script>
+<script>
+    new gnMenu(document.getElementById('gn-menu'));
+</script>
 </html>
