@@ -12,7 +12,7 @@
                     <div style="float: left;margin-right: 10px;" class="hello">
                         notifications
                             <i class="fa fa-user" aria-hidden="true"></i>
-                            <a href="{{ route('profile.index' , \App\User::find(Auth::user()->id)->lang) }}">{{Auth::user()->username}}</a>
+                            <a href="{{ route('profile.index' , Session::get('lang')) }}">{{Auth::user()->username}}</a>
                     </div>
 
                     <a href="{{ route('logout') }}" style="display: block; float: left;" onclick="event.preventDefault();document.getElementById('logout-form').submit();">

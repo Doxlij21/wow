@@ -25,12 +25,12 @@
                 <ul class="Navigation">
                     <li><a href="#" class="fa fa-user"></a>
                         <ul>
-                            <li><a href="/profile">Profile</a></li>
+                            <li><a href="{{ route('profile.index' , Session::get('lang') )}}">Profile</a></li>
                             <li><a href="/logout" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                     <i class="fa fa-sign-out" aria-hidden="true"></i>Logout
                                 </a>
-                                <form id="logout-form" action="/logout" method="POST" style="display: none;">
-                                    <input type="hidden" name="_token" value="IMiRSRKT5Tn3EKMm4EyQFjqD6cuerladLJu85bBu">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
                                 </form>
                             </li>
                         </ul>
@@ -44,16 +44,20 @@
                     <li><a href="#" class="fa fa-globe"></a>
                         <ul>
                             <li>
-                                <a href="{{ route('profile.index' , \App\User::find(Auth::user()->id)->lang) }}">
-                                    <img src="/img/profile/eng.jpg">
-                                </a>
-                                <input type="hidden" name="_token" value="IMiRSRKT5Tn3EKMm4EyQFjqD6cuerladLJu85bBu">
+                                <form id="sendLangEN" method="post" name="lang" action="{{route('lang.post' ,'en')}}" enctype="multipart/form-data">
+                                    <a href="#" onclick="document.getElementById('sendLangEN').submit();">
+                                        <img src="/img/profile/eng.jpg">
+                                    </a>
+                                    {!! csrf_field() !!}
+                                </form>
                             </li>
                             <li>
-                                <a href="{{ route('profile.index' , \App\User::find(Auth::user()->id)->lang) }}">
-                                    <img src="/img/profile/ru.jpg">
-                                </a>
-                                <input type="hidden" name="_token" value="IMiRSRKT5Tn3EKMm4EyQFjqD6cuerladLJu85bBu">
+                                <form id="sendLangRU" method="post" name="lang" action="{{route('lang.post' ,'ru')}}" enctype="multipart/form-data">
+                                    <a href="#" onclick="document.getElementById('sendLangRU').submit();">
+                                        <img src="/img/profile/ru.jpg">
+                                    </a>
+                                    {!! csrf_field() !!}
+                                </form>
                             </li>
                         </ul>
                     </li>
