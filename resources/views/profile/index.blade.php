@@ -25,23 +25,60 @@
                 <ul class="Navigation">
                     <li><a href="#" class="fa fa-user"></a>
                         <ul>
+<<<<<<< HEAD
                             <li><a href="#">Profile</a></li>
                             <li><a href="#">Existing</a></li>
                             <li><a href="#">Create statiс</a></li>
+=======
+                            <li><a href="/profile">Profile</a></li>
+                            <li><a href="/logout" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                    <i class="fa fa-sign-out" aria-hidden="true"></i>Logout
+                                </a>
+                                <form id="logout-form" action="/logout" method="POST" style="display: none;">
+                                    <input type="hidden" name="_token" value="IMiRSRKT5Tn3EKMm4EyQFjqD6cuerladLJu85bBu">
+                                </form>
+                            </li>
+>>>>>>> Добавил 28/10-2
                         </ul>
                     </li>
                     <li><a href="#" class="fa fa-envelope-o"></a>
                         <ul>
+<<<<<<< HEAD
                             <li><a href="#">New</a></li>
                             <li><a href="#">Archive</a></li>
+=======
+                            <li><a href="#win1">New</a></li>
+>>>>>>> Добавил 28/10-2
                         </ul>
                     </li>
                     <li><a href="#" class="fa fa-calendar"></a></li>
 
                     <li><a href="#" class="fa fa-globe"></a>
                         <ul>
+<<<<<<< HEAD
                             <li><a href="#"><img src="/img/profile/eng.jpg">English (en)</a></li>
                             <li><a href="#"><img src="/img/profile/ru.jpg">Russian (ru)</a></li>
+=======
+                            <li>
+                                <form id="sendLangEN" method="post" name="lang" action="https://212.142.100.70/lang/en" enctype="multipart/form-data">
+                                    <a href="#" onclick="document.getElementById('sendLangEN').submit();">
+                                        <img src="/img/profile/eng.jpg">
+                                    </a>
+
+                                    <input type="hidden" name="_token" value="IMiRSRKT5Tn3EKMm4EyQFjqD6cuerladLJu85bBu">
+                                </form>
+                            </li>
+                            <li>
+                                <form id="sendLangRU" method="post" name="lang" action="https://212.142.100.70/lang/ru" enctype="multipart/form-data">
+                                    <a href="#" onclick="document.getElementById('sendLangRU').submit();">
+                                        <img src="/img/profile/ru.jpg">
+                                    </a>
+
+
+                                    <input type="hidden" name="_token" value="IMiRSRKT5Tn3EKMm4EyQFjqD6cuerladLJu85bBu">
+                                </form>
+                            </li>
+>>>>>>> Добавил 28/10-2
                         </ul>
                     </li>
                 </ul>
@@ -91,7 +128,8 @@
 </header>
 <content>
                 <div id="content">
-                    <div style="float:left;height: 500px;width: 150px;" id="profileMenu">
+                    <div id="title">Create Static</div>
+                    <div id="profileMenu">
                         <form class="form" action="{{route('profile.post.menu', $user->id)}}" enctype="multipart/form-data">
                             <ul class="profileMenu">
                                 <li class="profileMenuItem">
@@ -138,22 +176,26 @@
 
                         </script>
                     </div>
-                    <div style="float: left;width: 1060px;" id="profileContent">
+                    <div id="profileContent">
                         @if($menuFilter->menu_name == 'Create static')
                             @if(count($user->battlenet_token) > 0)
                                 <form class="form" action="{{route('profile.create.static')}}" enctype="multipart/form-data" onSubmit="return check()">
                                     <div id="static" style="float: left;">
-                                        <div class="staticTitle">
+                                        <div id="staticTitle">
                                             <label for="static_name">Chose static title</label>
                                             <input id="static_name" type="text" name="static_name">
                                         </div>
                                         <div class="staticCharacter">
-                                            <label for="staticCharacter">Select you'r character</label>
+                                            <label for="staticCharacter">Select static RL</label>
                                             <ul id="staticCharacterOpt">
                                                 @foreach($wowresponse->characters as $wowr)
                                                     @if($wowr->level == 110)
                                                         <li style="cursor: pointer">{{$wowr->name}} , {{$wowr->realm}} <img src="https://render-eu.worldofwarcraft.com/character/{{$wowr->thumbnail}}"></li>
                                                         <div id="transferSelectedCharacter" style="display: none">
+<<<<<<< HEAD
+=======
+                                                            <div id="selectedthischaracter">Selected RL this character:</div>
+>>>>>>> Добавил 28/10-2
                                                             <div>
                                                                 You selected this character: {{$wowr->name}} , {{$wowr->realm}} <img src="https://render-eu.worldofwarcraft.com/character/{{$wowr->thumbnail}}">
                                                                 <input name="charactername" value="{{$wowr->name}}" style="display: none">
@@ -171,6 +213,22 @@
                                             <div id="selectedStaticCharacter">
 
                                             </div>
+<<<<<<< HEAD
+=======
+                                            <div id="staticHelper">
+                                                <div class="helperWrap">
+                                                    <div class="first">
+                                                        <span class="pending">Choose you'r static title <a href="#static_name"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></a></span>
+                                                        <span style="color: green;display: none" class="done"></span>
+                                                        <span style="color: red;display: none" class="error"></span>
+                                                    </div>
+                                                    <div style="width: 240.844px;" class="second">
+                                                        <span class="pending">Choose static rl<a href="#staticCharacterOpt"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></a></span>
+                                                        <span style="color: green;display: none" class="done"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+>>>>>>> Добавил 28/10-2
                                         </div>
                                         <div id="staticUsers">
                                             @if (count(request()->guildserver) > 0)
@@ -181,6 +239,11 @@
                                                     $parseguild = json_decode(file_get_contents("https://$user->battlenet_region.api.battle.net/wow/guild/$guildserver/$guildname?fields=members&apikey=$apikey"));
                                                     $filteredguild = collect($parseguild->members)->where('character.level','110');
                                                 ?>
+                                                    <div style="width: auto;" class="third">
+                                                        <span class="pending">Select static members:</span>
+                                                        <span style="color: green;display: none" class="done">Selected static members:</span>
+                                                        <span style="color: red;display: none" class="error"></span>
+                                                    </div>
                                                 <div id="classFilterWrap">
                                                     <ul id="classFilter">
                                                         <li class="" data-cat-class="Warrior"><span style="color: #C79C6E;">Warrior</span></li>
@@ -394,6 +457,17 @@
                         @endif
                     </div>
                 </div>
+<<<<<<< HEAD
+=======
+    <!-- popup-1 -->
+    <a href="#x" class="overlay" id="win1"></a>
+    <div class="popup">
+        content
+        <a class="close" title="Закрыть" href="#close"></a>
+    </div>
+
+
+>>>>>>> Добавил 28/10-2
 </content>
     <footer>
     </footer>

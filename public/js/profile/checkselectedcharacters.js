@@ -3,7 +3,7 @@ var tspanp = $('.third span.pending');
 var tspane = $('.third span.error');
 var count = 0;
 $('#selectCharacters').find('input').on('click',function () {
-    if ($('#selectCharacters').find('input:checked').length == 0)
+    if ($('#selectCharacters').children().find('input:checked').length == 0)
     {
         tspand.hide();
         tspanp.show();
