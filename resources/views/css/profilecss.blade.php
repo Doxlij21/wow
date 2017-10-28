@@ -1,4 +1,4 @@
-// css файл для профиля. Меняйте как хотите
+
 <style>
     body {
         -webkit-text-size-adjust: 100%;
@@ -6,7 +6,7 @@
         -ms-text-size-adjust: 100%;
         text-size-adjust: 100%;
         color: #cecece;
-        background-color: #212737;
+        background-color: #212730;
         word-wrap: break-word;
         line-height: 1.28;
     }
@@ -14,23 +14,33 @@
         margin: 0;
         padding: 0;
     }
+    content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
 
     #content {
-        min-height: 1000px;
+        flex: 1 0 auto;
         margin-left: auto;
         margin-right: auto;
-        margin-top: 68px;
+        margin-top: 60px;
+        margin-bottom: 28px;
         width: 1210px;
-        padding: 0 20px;
         background-color: #212730;
+        min-height: calc(91vh - 21px);
     }
 
-    #content .pageContent {
-        overflow: hidden;
-        padding-top: 68px;
+    footer {
+        flex: 0 0 auto;
+        background: #1f242d;
+        bottom: 0;
         width: 100%;
+        height: 20px;
+        text-align: center;
+        font-size: 12px;
+        color: white;
     }
-
     li{
         list-style-type: none;
     }
@@ -301,6 +311,158 @@
 
     .Navigation li:hover, a:hover {
         background: #1c2129;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+        box-shadow: 0 0 7px 4px rgba(0, 0, 0, .2);
     }
+    /*--------------------------------------------------------------
+        tabs
+    --------------------------------------------------------------*/
+    UL.mytabs {
+        font-weight: bold;
+        font-size: 11px;
+        margin: auto;
+        width: auto;
+    }
+    UL.mytabs, UL.mytabs LI {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        float: left;
+    }
+    UL.mytabs LI { padding: 0 5px; }
+    UL.mytabs LI A {
+        float: left;
+        padding: 3px;
+        background: #212730;
+        text-decoration: none;
+        height: 12px;
+        font:14px verdana,arial,sans-serif;
+    }
+    UL.mytabs LI A:HOVER, UL.mytabs LI.current A {
+        background: #212730;
+    }
+
+    .mytabs-container {
+        clear: both;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+        padding: 13px;
+        top: 3px;
+        background:#212730;
+    }
+    #classFilter {
+        font-weight: bold;
+        font-size: 11px;
+        margin: auto;
+        width: auto;
+        padding:20px;
+        cursor:pointer;
+    }
+    #staticHelper {
+    }
+    .buttons {
+        padding: 20px 0;
+        width: 100%;
+        text-align: center;
+
+    }
+    .js-login-text {
+        width: 100%;
+        cursor:pointer;
+        background:#212730;
+        color:#cecece;
+        box-shadow: 0 0 7px 4px rgba(0, 0, 0, .2);
+    }
+    /*--------------------------------------------------------------
+        color class
+    --------------------------------------------------------------*/
+    .Deathknight {
+        color: #C41F3B;
+    }
+    .Demonhunter {
+        color: #A330C9;
+    }
+    .Druid {
+        color: #FF7D0A;
+    }
+    .Hunter {
+        color: #ABD473;
+    }
+    .Mage {
+        color: #69CCF0;
+    }
+    .Monk {
+        color: #008467;
+    }
+    .Paladin {
+        color: #F58CBA;
+    }
+    .Priest {
+        color: #FFFFFF;
+    }
+    .Rogue {
+        color: #FFF569;
+    }
+    .Shaman {
+        color: #2459FF;
+    }
+    .Warlock {
+        color: #9482CA;
+    }
+    .Warrior {
+        color: #C79C6E;
+    }
+    .All {
+        color: #FFFFFF;
+    }
+    /*--------------------------------------------------------------
+        userbar
+    --------------------------------------------------------------*/
+    #transferSelectedCharacter {
+        padding:10px;
+        height: 61px;
+        max-width: 275px;
+        text-align: center;
+        font-size: 14px verdana,arial,sans-serif;
+        text-decoration: none;
+        cursor:pointer;
+        box-shadow: 0 0 7px 2px rgba(0, 0, 0, .2);
+    }
+    #selectedthischaracter {
+        margin:-5px 0 5px 0;
+        height: 17px;
+        text-align: center;
+        box-shadow: 0 0 7px 2px rgba(0, 0, 0, .2);
+    }
+
+    .staticCharacter li{
+        height: 51px;
+        max-width: 275px;
+        margin:10px;
+        text-align: center;
+        font-size: 14px verdana,arial,sans-serif;
+        text-decoration: none;
+        cursor:pointer;
+        box-shadow: 0 0 7px 2px rgba(0, 0, 0, .2);
+    }
+    .staticCharacter li:hover {
+        height: 51px;
+        max-width: 276px;
+        box-shadow: 0 0 7px 5px rgba(0, 0, 0, .2);
+    }
+
+    .staticCharacter a{
+        text-decoration: none;
+    }
+
+    .staticCharacter ul{
+        text-decoration: none;
+        list-style: none;
+    }
+    .staticCharacter img {
+        height: 50px;
+        width: 50px;
+        float:left;
+    }
+    /*--------------------------------------------------------------
+        and userbar
+    --------------------------------------------------------------*/
 </style>
