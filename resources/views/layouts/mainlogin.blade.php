@@ -36,7 +36,7 @@
 
                 <div class="buttons" style="padding: 20px 0;border-top: 1px solid #dad8de;width: 100%;text-align: center;">
                     <div class="form-group">
-                        <button type="submit" name="login" style="width: 71px;height: 32px;" class="primary button">
+                        <button type="submit" style="width: 71px;height: 32px;" class="primary button">
                         <span class="js-login-text">
                             Enter
                         </span>

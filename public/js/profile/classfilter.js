@@ -14,7 +14,8 @@ $('#classFilterWrap').find(a).on("click","li",function(){
 
     var guildserver = selected.find('#guildserverinput')[0].value.replace(/ /g,"%20");
     var guildname = selected.find("#guildnameinput")[0].value.replace(/ /g,"%20");
-    var className = c[0].outerText.replace(/ /g,"%20");;
+    var className = c[0].outerText.replace(/ /g,"%20");
 
-    $("#selectCharacters").load('?guildserver=' + guildserver  + '&guildname=' + guildname + '&class=' + className + ' #selectCharacters');
+    $("#selectCharactersWrap").load('?guildserver=' + guildserver  + '&guildname=' + guildname + '&class=' + className + ' #selectCharacters');
+    console.log($("#selectCharacters"));
 });
