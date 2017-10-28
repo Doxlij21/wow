@@ -44,23 +44,16 @@
                     <li><a href="#" class="fa fa-globe"></a>
                         <ul>
                             <li>
-                                <form id="sendLangEN" method="post" name="lang" action="https://212.142.100.70/lang/en" enctype="multipart/form-data">
-                                    <a href="#" onclick="document.getElementById('sendLangEN').submit();">
-                                        <img src="/img/profile/eng.jpg">
-                                    </a>
-
-                                    <input type="hidden" name="_token" value="IMiRSRKT5Tn3EKMm4EyQFjqD6cuerladLJu85bBu">
-                                </form>
+                                <a href="{{ route('profile.index' , \App\User::find(Auth::user()->id)->lang) }}">
+                                    <img src="/img/profile/eng.jpg">
+                                </a>
+                                <input type="hidden" name="_token" value="IMiRSRKT5Tn3EKMm4EyQFjqD6cuerladLJu85bBu">
                             </li>
                             <li>
-                                <form id="sendLangRU" method="post" name="lang" action="https://212.142.100.70/lang/ru" enctype="multipart/form-data">
-                                    <a href="#" onclick="document.getElementById('sendLangRU').submit();">
-                                        <img src="/img/profile/ru.jpg">
-                                    </a>
-
-
-                                    <input type="hidden" name="_token" value="IMiRSRKT5Tn3EKMm4EyQFjqD6cuerladLJu85bBu">
-                                </form>
+                                <a href="{{ route('profile.index' , \App\User::find(Auth::user()->id)->lang) }}">
+                                    <img src="/img/profile/ru.jpg">
+                                </a>
+                                <input type="hidden" name="_token" value="IMiRSRKT5Tn3EKMm4EyQFjqD6cuerladLJu85bBu">
                             </li>
                         </ul>
                     </li>
@@ -222,9 +215,55 @@
                                                 @if(count(request()->class) > 0)
                                                     @foreach($filteredguild as $fguild)
                                                             @if($_GET['class'] == 'All')
-                                                                <div>
-                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox">{{$fguild->character->name}}
-                                                                </div>
+                                                                @if($fguild->character->class == 1)
+                                                                    <div class="active" id="Warrior" dataclass="Warrior">
+                                                                        <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Warrior">{{$fguild->character->name}}</span>
+                                                                    </div>
+                                                                @elseif($fguild->character->class == 2)
+                                                                    <div class="active" id="Paladin" dataclass="Paladin">
+                                                                        <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Paladin">{{$fguild->character->name}}</span>
+                                                                    </div>
+                                                                @elseif($fguild->character->class == 3)
+                                                                    <div class="active" id="Hunter" dataclass="Hunter">
+                                                                        <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Hunter">{{$fguild->character->name}}</span>
+                                                                    </div>
+                                                                @elseif($fguild->character->class == 4)
+                                                                    <div class="active" id="Rogue" dataclass="Rogue">
+                                                                        <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Rogue">{{$fguild->character->name}}</span>
+                                                                    </div>
+                                                                @elseif($fguild->character->class == 5)
+                                                                    <div class="active" id="Priest" dataclass="Priest">
+                                                                        <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Priest">{{$fguild->character->name}}</span>
+                                                                    </div>
+                                                                @elseif($fguild->character->class == 6)
+                                                                    <div class="active" id="Death Knight" dataclass="Death Knight">
+                                                                        <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Deathknight">{{$fguild->character->name}}</span>
+                                                                    </div>
+                                                                @elseif($fguild->character->class == 7)
+                                                                    <div class="active" id="Shaman" dataclass="Shaman">
+                                                                        <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Shaman">{{$fguild->character->name}}</span>
+                                                                    </div>
+                                                                @elseif($fguild->character->class == 8)
+                                                                    <div class="active" id="Mage" dataclass="Mage">
+                                                                        <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Mage">{{$fguild->character->name}}</span>
+                                                                    </div>
+                                                                @elseif($fguild->character->class == 9)
+                                                                    <div class="active" id="Warlock" dataclass="Warlock">
+                                                                        <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Warlock">{{$fguild->character->name}}</span>
+                                                                    </div>
+                                                                @elseif($fguild->character->class == 10)
+                                                                    <div class="active" id="Monk" dataclass="Monk">
+                                                                        <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Monk">{{$fguild->character->name}}</span>
+                                                                    </div>
+                                                                @elseif($fguild->character->class == 11)
+                                                                    <div class="active" id="Druid" dataclass="Druid">
+                                                                        <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Druid">{{$fguild->character->name}}</span>
+                                                                    </div>
+                                                                @elseif($fguild->character->class == 12)
+                                                                    <div class="active" id="Demon Hunter" dataclass="Demon Hunter">
+                                                                        <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Demonhunter">{{$fguild->character->name}}</span>
+                                                                    </div>
+                                                                @endif
                                                             @else
                                                             @endif
                                                         @if($fguild->character->class == 1)

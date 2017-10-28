@@ -16,5 +16,7 @@ $('#classFilterWrap').find(a).on("click","li",function(){
     var guildname = selected.find("#guildnameinput")[0].value.replace(/ /g,"%20");
     var className = c[0].outerText.replace(/ /g,"%20");;
 
-    $("#selectCharacters").load('?guildserver=' + guildserver  + '&guildname=' + guildname + '&class=' + className + ' #selectCharacters');
+    $("#selectCharacters").load('?guildserver=' + guildserver  + '&guildname=' + guildname + '&class=' + className + ' #selectCharacters', function () {
+        $.getScript('/js/profile/checkselectedcharacters.js');
+    });
 });
