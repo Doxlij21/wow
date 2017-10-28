@@ -25,11 +25,6 @@
                 <ul class="Navigation">
                     <li><a href="#" class="fa fa-user"></a>
                         <ul>
-<<<<<<< HEAD
-                            <li><a href="#">Profile</a></li>
-                            <li><a href="#">Existing</a></li>
-                            <li><a href="#">Create statiс</a></li>
-=======
                             <li><a href="/profile">Profile</a></li>
                             <li><a href="/logout" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                     <i class="fa fa-sign-out" aria-hidden="true"></i>Logout
@@ -38,27 +33,16 @@
                                     <input type="hidden" name="_token" value="IMiRSRKT5Tn3EKMm4EyQFjqD6cuerladLJu85bBu">
                                 </form>
                             </li>
->>>>>>> Добавил 28/10-2
                         </ul>
                     </li>
                     <li><a href="#" class="fa fa-envelope-o"></a>
                         <ul>
-<<<<<<< HEAD
-                            <li><a href="#">New</a></li>
-                            <li><a href="#">Archive</a></li>
-=======
                             <li><a href="#win1">New</a></li>
->>>>>>> Добавил 28/10-2
                         </ul>
                     </li>
-                    <li><a href="#" class="fa fa-calendar"></a></li>
 
                     <li><a href="#" class="fa fa-globe"></a>
                         <ul>
-<<<<<<< HEAD
-                            <li><a href="#"><img src="/img/profile/eng.jpg">English (en)</a></li>
-                            <li><a href="#"><img src="/img/profile/ru.jpg">Russian (ru)</a></li>
-=======
                             <li>
                                 <form id="sendLangEN" method="post" name="lang" action="https://212.142.100.70/lang/en" enctype="multipart/form-data">
                                     <a href="#" onclick="document.getElementById('sendLangEN').submit();">
@@ -78,7 +62,6 @@
                                     <input type="hidden" name="_token" value="IMiRSRKT5Tn3EKMm4EyQFjqD6cuerladLJu85bBu">
                                 </form>
                             </li>
->>>>>>> Добавил 28/10-2
                         </ul>
                     </li>
                 </ul>
@@ -90,33 +73,11 @@
                     <ul class="gn-menu">
                         <li class="gn-search-item">
                             <input placeholder="Search" type="search" class="gn-search">
-                            <a href="#">
-                                <i class="fa fa-search"></i>
-                                <span>Search</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-file-o"></i> Page1
-                            </a>
-                            <ul class="gn-submenu">
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-o"></i> Page2
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-file-o"></i> Page3
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-cog"></i> Настройки
-                            </a>
-                        </li>
+                            <a href="#"><i class="fa fa-search"></i><span>Search</span></a></li>
+                        <li><a href="#"><i class="fa fa-file-o"></i> Page1</a></li>
+                        <li><a href="#"><i class="fa fa-file-o"></i> Page2</a></li>
+                        <li><a href="#"><i class="fa fa-file-o"></i> Page3</a></li>
+                        <li><a href="#"><i class="fa fa-cog"></i> Настройки</a></li>
                         <!-- ... /-->
                     </ul>
                 </div>
@@ -190,14 +151,11 @@
                                             <ul id="staticCharacterOpt">
                                                 @foreach($wowresponse->characters as $wowr)
                                                     @if($wowr->level == 110)
-                                                        <li style="cursor: pointer">{{$wowr->name}} , {{$wowr->realm}} <img src="https://render-eu.worldofwarcraft.com/character/{{$wowr->thumbnail}}"></li>
+                                                        <li>{{$wowr->name}} , {{$wowr->realm}} <img src="https://render-eu.worldofwarcraft.com/character/{{$wowr->thumbnail}}"></li>
                                                         <div id="transferSelectedCharacter" style="display: none">
-<<<<<<< HEAD
-=======
                                                             <div id="selectedthischaracter">Selected RL this character:</div>
->>>>>>> Добавил 28/10-2
                                                             <div>
-                                                                You selected this character: {{$wowr->name}} , {{$wowr->realm}} <img src="https://render-eu.worldofwarcraft.com/character/{{$wowr->thumbnail}}">
+                                                                 {{$wowr->name}} , {{$wowr->realm}} <img src="https://render-eu.worldofwarcraft.com/character/{{$wowr->thumbnail}}">
                                                                 <input name="charactername" value="{{$wowr->name}}" style="display: none">
                                                             </div>
                                                             <div>
@@ -210,11 +168,10 @@
                                                     @endif
                                                 @endforeach
                                             </ul>
+
                                             <div id="selectedStaticCharacter">
 
                                             </div>
-<<<<<<< HEAD
-=======
                                             <div id="staticHelper">
                                                 <div class="helperWrap">
                                                     <div class="first">
@@ -228,7 +185,6 @@
                                                     </div>
                                                 </div>
                                             </div>
->>>>>>> Добавил 28/10-2
                                         </div>
                                         <div id="staticUsers">
                                             @if (count(request()->guildserver) > 0)
@@ -245,22 +201,23 @@
                                                         <span style="color: red;display: none" class="error"></span>
                                                     </div>
                                                 <div id="classFilterWrap">
-                                                    <ul id="classFilter">
-                                                        <li class="" data-cat-class="Warrior"><span style="color: #C79C6E;">Warrior</span></li>
-                                                        <li class="" data-cat-class="Paladin"><span style="color: #F58CBA">Paladin</span></li>
-                                                        <li class="" data-cat-class="Hunter">Hunter</li>
-                                                        <li class="" data-cat-class="Rogue">Rogue</li>
-                                                        <li class="" data-cat-class="Priest">Priest</li>
-                                                        <li class="" data-cat-class="Death Knight">Death Knight</li>
-                                                        <li class="" data-cat-class="Shaman">Shaman</li>
-                                                        <li class="" data-cat-class="Mage">Mage</li>
-                                                        <li class="" data-cat-class="Warlock">Warlock</li>
-                                                        <li class="" data-cat-class="Monk">Monk</li>
-                                                        <li class="" data-cat-class="Druid">Druid</li>
-                                                        <li class="" data-cat-class="Demon Hunter">Demon Hunter</li>
-                                                        <li class="" data-cat-class="All">All</li>
+                                                    <ul class="mytabs" id="classFilter">
+                                                        <li class="" data-cat-class="Warrior"><a class="Warrior">Warrior</a></li>
+                                                        <li class="" data-cat-class="Paladin"><a class="Paladin">Paladin</a></li>
+                                                        <li class="" data-cat-class="Hunter"><a class="Hunter">Hunter</a></li>
+                                                        <li class="" data-cat-class="Rogue"><a class="Rogue">Rogue</a></li>
+                                                        <li class="" data-cat-class="Priest"><a class="Priest">Priest</a></li>
+                                                        <li class="" data-cat-class="Death Knight"><a class="Deathknight">Death Knight</a></li>
+                                                        <li class="" data-cat-class="Shaman"><a class="Shaman">Shaman</a></li>
+                                                        <li class="" data-cat-class="Mage"><a class="Mage">Mage</a></li>
+                                                        <li class="" data-cat-class="Warlock"><a class="Warlock">Warlock</a></li>
+                                                        <li class="" data-cat-class="Monk"><a class="Monk">Monk</a></li>
+                                                        <li class="" data-cat-class="Druid"><a class="Druid">Druid</a></li>
+                                                        <li class="" data-cat-class="Demon Hunter"><a class="Demonhunter">Demon Hunter</a></li>
+                                                        <li class="" data-cat-class="All"><a class="All">All</a></li>
                                                     </ul>
                                                 </div>
+                                                    <div class="mytabs-container" id="tabs-container">
                                                 <div id="selectCharacters">
                                                 @if(count(request()->class) > 0)
                                                     @foreach($filteredguild as $fguild)
@@ -273,84 +230,84 @@
                                                         @if($fguild->character->class == 1)
                                                             @if($_GET['class'] == 'Warrior')
                                                                 <div class="active" id="Warrior" dataclass="Warrior">
-                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span style="color: #C79C6E;">{{$fguild->character->name}}</span>
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Warrior">{{$fguild->character->name}}</span>
                                                                 </div>
                                                             @else
                                                             @endif
                                                         @elseif($fguild->character->class == 2)
                                                             @if($_GET['class'] == 'Paladin')
                                                                 <div class="active" id="Paladin" dataclass="Paladin">
-                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span style="color: #F58CBA">{{$fguild->character->name}}</span>
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Paladin">{{$fguild->character->name}}</span>
                                                                 </div>
                                                             @else
                                                             @endif
                                                         @elseif($fguild->character->class == 3)
                                                             @if($_GET['class'] == 'Hunter')
                                                                 <div class="active" id="Hunter" dataclass="Hunter">
-                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Hunter">{{$fguild->character->name}}</span>
                                                                 </div>
                                                             @else
                                                             @endif
                                                         @elseif($fguild->character->class == 4)
                                                             @if($_GET['class'] == 'Rogue')
                                                                 <div class="active" id="Rogue" dataclass="Rogue">
-                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Rogue">{{$fguild->character->name}}</span>
                                                                 </div>
                                                             @else
                                                             @endif
                                                         @elseif($fguild->character->class == 5)
                                                             @if($_GET['class'] == 'Priest')
                                                                 <div class="active" id="Priest" dataclass="Priest">
-                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Priest">{{$fguild->character->name}}</span>
                                                                 </div>
                                                             @else
                                                             @endif
                                                         @elseif($fguild->character->class == 6)
                                                             @if($_GET['class'] == 'Death Knight')
                                                                 <div class="active" id="Death Knight" dataclass="Death Knight">
-                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Deathknight">{{$fguild->character->name}}</span>
                                                                 </div>
                                                             @else
                                                             @endif
                                                         @elseif($fguild->character->class == 7)
                                                             @if($_GET['class'] == 'Shaman')
                                                                 <div class="active" id="Shaman" dataclass="Shaman">
-                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Shaman">{{$fguild->character->name}}</span>
                                                                 </div>
                                                             @else
                                                             @endif
                                                         @elseif($fguild->character->class == 8)
                                                             @if($_GET['class'] == 'Mage')
                                                                 <div class="active" id="Mage" dataclass="Mage">
-                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Mage">{{$fguild->character->name}}</span>
                                                                 </div>
                                                             @else
                                                             @endif
                                                         @elseif($fguild->character->class == 9)
                                                             @if($_GET['class'] == 'Warlock')
                                                                 <div class="active" id="Warlock" dataclass="Warlock">
-                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Warlock">{{$fguild->character->name}}</span>
                                                                 </div>
                                                             @else
                                                             @endif
                                                         @elseif($fguild->character->class == 10)
                                                             @if($_GET['class'] == 'Monk')
                                                                 <div class="active" id="Monk" dataclass="Monk">
-                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Monk">{{$fguild->character->name}}</span>
                                                                 </div>
                                                             @else
                                                             @endif
                                                         @elseif($fguild->character->class == 11)
                                                             @if($_GET['class'] == 'Druid')
                                                                 <div class="active" id="Druid" dataclass="Druid">
-                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Druid">{{$fguild->character->name}}</span>
                                                                 </div>
                                                             @else
                                                             @endif
                                                         @elseif($fguild->character->class == 12)
                                                             @if($_GET['class'] == 'Demon Hunter')
                                                                 <div class="active" id="Demon Hunter" dataclass="Demon Hunter">
-                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> {{$fguild->character->name}}
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Demonhunter">{{$fguild->character->name}}</span>
                                                                 </div>
                                                             @else
                                                             @endif
@@ -359,11 +316,12 @@
                                                 @else
                                                 @endif
                                                 </div>
+                                                    </div>
                                                 <input type="hidden" name="_token" value="{{Session::token()}}">
-                                                <div class="buttons" style="padding: 20px 0;border-top: 1px solid #dad8de;width: 100%;text-align: center;">
+                                                <div class="buttons">
                                                     <div class="form-group">
-                                                        <button onSubmit="return check()" type="submit" style="width: 71px;height: 32px;" class="primary button">
-                                                <span style="line-height: 0px !important;" class="js-login-text">
+                                                        <button onSubmit="return check()" type="submit" class="primary button">
+                                                <span class="js-login-text">
                                                     create static
                                                 </span>
                                                         </button>
@@ -374,24 +332,7 @@
                                         </div>
                                     </div>
                                 </form>
-                                <div style="float: right;width: 240.844px;margin-left: 5px;" id="staticHelper">
-                                    <div style="position: fixed;height: auto;margin: 0 auto;" class="helperWrap">
-                                        <div style="width: 240.844px;" class="first">
-                                            <span class="pending">Choose you'r static name <a href="#static_name"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></a></span>
-                                            <span style="color: green;display: none" class="done"></span>
-                                            <span style="color: red;display: none" class="error"></span>
-                                        </div>
-                                        <div style="width: 240.844px;" class="second">
-                                            <span class="pending">Choose static rl<a href="#staticCharacterOpt"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></a></span>
-                                            <span style="color: green;display: none" class="done"></span>
-                                        </div>
-                                        <div style="width: 240.844px;" class="third">
-                                            <span class="pending">Select static members:</span>
-                                            <span style="color: green;display: none" class="done">Selected static members:</span>
-                                            <span style="color: red;display: none" class="error"></span>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 @else
                                 Please connect battle.net account
                                 @endif
@@ -456,9 +397,8 @@
                             </div>
                         @endif
                     </div>
+
                 </div>
-<<<<<<< HEAD
-=======
     <!-- popup-1 -->
     <a href="#x" class="overlay" id="win1"></a>
     <div class="popup">
@@ -467,10 +407,10 @@
     </div>
 
 
->>>>>>> Добавил 28/10-2
 </content>
-    <footer>
-    </footer>
+<footer>
+    WoW<span style="color:red; font-weight: 600; font-size: 15px;">R</span>aid
+</footer>
 </body>
 <script src="/js/profile/checkform.js"></script>
 <script src="/js/profile/selectcharacter.js"></script>
