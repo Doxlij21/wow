@@ -402,7 +402,19 @@
     <!-- popup-1 -->
     <a href="#x" class="overlay" id="win1"></a>
     <div class="popup">
-        content
+        @if(count($usercharacters) > 0)
+            <div onClick="$('.showNoti').toggle()">
+                <span style="color: red">{{count($usercharacters)}}</span> new notifications
+            </div>
+            <div class="showNoti" style="display: none">
+                @foreach($usercharacters as $usercharacter)
+                    <a href="{{route('mark.asread',$usercharacter->id)}}">
+                        <li>You're character: {{$usercharacter->battlenet_user_character_name}} invited to this static: {{\App\WowStatic::find($usercharacter->static_id)->static_name}}</li>
+                    </a>
+                @endforeach
+            </div>
+        @else
+        @endif
         <a class="close" title="Закрыть" href="#close"></a>
     </div>
 
