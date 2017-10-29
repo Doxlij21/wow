@@ -35,12 +35,11 @@
                             </li>
                         </ul>
                     </li>
-                    <li><a href="#" class="fa fa-envelope-o"></a>
-                        <ul>
-                            <li><a href="#win1">New</a></li>
-                        </ul>
+                    <li><a href="#win1" class="fa fa-envelope-o"></a>
+                        <div style="margin:-30px 30px 0 0;" onClick="$('.showNoti').toggle()">
+                            <span style="color: red; cursor:pointer;">{{count($usercharacters)}}</span>
+                        </div>
                     </li>
-
                     <li><a href="#" class="fa fa-globe"></a>
                         <ul>
                             <li>
@@ -85,8 +84,30 @@
     </div>
 </header>
 <content>
+    <div id="staticHelper">
+        <div class="helperWrap">
+            @if($menuFilter->menu_name == 'Create static')
+                @if(count($user->battlenet_token) > 0)
+                    <form class="form" action="{{route('profile.create.static')}}" enctype="multipart/form-data" onSubmit="return check()">
+                        <div id="staticHelperblock">
+                            <div class="first">
+                                <span class="pending">Choose you'r static title <a href="#static_name"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></a></span>
+                                <span style="color: green;display: none" class="done"></span>
+                                <span style="color: red;display: none" class="error"></span>
+                            </div>
+                            <div style="width: 240.844px;" class="second">
+                                <span class="pending">Choose static rl<a href="#staticCharacterOpt"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></a></span>
+                                <span style="color: green;display: none" class="done"></span>
+                            </div>
+                        </div>
                 <div id="content">
-                    <div id="title">Create Static</div>
+
+                    <div id="title">
+                        <div id="staticTitle">
+                            <input id="static_name" type="text" name="static_name">
+                        </div>
+                    </div>
+
                     <div id="profileMenu">
                         <form class="form" action="{{route('profile.post.menu', $user->id)}}" enctype="multipart/form-data">
                             <ul class="profileMenu">
@@ -135,22 +156,13 @@
                         </script>
                     </div>
                     <div id="profileContent">
-                        @if($menuFilter->menu_name == 'Create static')
-                            @if(count($user->battlenet_token) > 0)
-                                <form class="form" action="{{route('profile.create.static')}}" enctype="multipart/form-data" onSubmit="return check()">
-                                    <div id="static" style="float: left;">
-                                        <div id="staticTitle">
-                                            <label for="static_name">Chose static title</label>
-                                            <input id="static_name" type="text" name="static_name">
-                                        </div>
+                                    <div id="static">
                                         <div class="staticCharacter">
-                                            <label for="staticCharacter">Select static RL</label>
                                             <ul id="staticCharacterOpt">
                                                 @foreach($wowresponse->characters as $wowr)
                                                     @if($wowr->level == 110)
                                                         <li>{{$wowr->name}} , {{$wowr->realm}} <img src="https://render-eu.worldofwarcraft.com/character/{{$wowr->thumbnail}}"></li>
-                                                        <div id="transferSelectedCharacter" style="display: none">
-                                                            <div id="selectedthischaracter">Selected RL this character:</div>
+                                                        <div id="transferSelectedCharacter">
                                                             <div>
                                                                  {{$wowr->name}} , {{$wowr->realm}} <img src="https://render-eu.worldofwarcraft.com/character/{{$wowr->thumbnail}}">
                                                                 <input name="charactername" value="{{$wowr->name}}" style="display: none">
@@ -169,17 +181,6 @@
                                             <div id="selectedStaticCharacter">
 
                                             </div>
-                                            <div id="staticHelper">
-                                                <div class="helperWrap">
-                                                    <div class="first">
-                                                        <span class="pending">Choose you'r static title <a href="#static_name"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></a></span>
-                                                        <span style="color: green;display: none" class="done"></span>
-                                                        <span style="color: red;display: none" class="error"></span>
-                                                    </div>
-                                                    <div style="width: 240.844px;" class="second">
-                                                        <span class="pending">Choose static rl<a href="#staticCharacterOpt"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></a></span>
-                                                        <span style="color: green;display: none" class="done"></span>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -192,6 +193,7 @@
                                                     $parseguild = json_decode(file_get_contents("https://$user->battlenet_region.api.battle.net/wow/guild/$guildserver/$guildname?fields=members&apikey=$apikey"));
                                                     $filteredguild = collect($parseguild->members)->where('character.level','110');
                                                 ?>
+
                                                     <div style="width: auto;" class="third">
                                                         <span class="pending">Select static members:</span>
                                                         <span style="color: green;display: none" class="done">Selected static members:</span>
@@ -447,12 +449,13 @@
     <div class="popup">
         @if(count($usercharacters) > 0)
             <div onClick="$('.showNoti').toggle()">
-                <span style="color: red">{{count($usercharacters)}}</span> new notifications
+                <span style="color: red;">{{count($usercharacters)}}</span>
+                <span style="color: green; cursor:pointer;">new notifications</span>>
             </div>
             <div class="showNoti" style="display: none">
                 @foreach($usercharacters as $usercharacter)
                     <a href="{{route('mark.asread',$usercharacter->id)}}">
-                        <li>You're character: {{$usercharacter->battlenet_user_character_name}} invited to this static: {{\App\WowStatic::find($usercharacter->static_id)->static_name}}</li>
+                        <li >You're character: {{$usercharacter->battlenet_user_character_name}} invited to this static: {{\App\WowStatic::find($usercharacter->static_id)->static_name}}</li>
                     </a>
                 @endforeach
             </div>

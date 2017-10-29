@@ -20,9 +20,11 @@
         height: 100%;
     }
     #title {
-        font-size: 35px;
-        text-align:center;
-        padding:0 0 25px 0;
+        width: 386px;
+        height:150px;
+        background-image: url(/img/profile/title-create_static.png);
+        margin-left:35%;
+        margin-right:35%;
     }
 
     #content {
@@ -53,7 +55,8 @@
     #profileContent {
         float: left;
         width: auto;
-        margin: 0px 0px 0px 13px;
+        margin: 20px 0px 0px 13px;
+        padding:0 0 0 160px;
 
     }
     #profileMenu {
@@ -61,9 +64,6 @@
         height: 100%;
         width: 150px;
         margin: 0px 0px 0px 8px;
-    }
-    #staticTitle {
-
     }
     @media screen and (max-width: 422px) {
         #content {
@@ -375,22 +375,34 @@
         clear: both;
         box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
         padding: 13px;
+        margin:0 170px 0 160px;
         top: 3px;
-        background:#212730;
     }
     #classFilter {
         font-weight: bold;
         font-size: 11px;
         width: auto;
         padding:20px;
-        margin:0 0 5px 0;
+        margin:0 0 5px 160px;
         cursor:pointer;
     }
-    #staticHelper {
+    #staticTitle{
+        padding:118px 0 0 97px;
+
     }
+    #static_name {
+        width:188px;
+    }
+    #staticHelperblock {
+        position: fixed;
+        right: 10px;
+    }
+
     .third {
         padding:20px 0 0 0;
         max-width: 1000px;
+        float:left;
+        margin:0 0 0 160px;
     }
     .third a {
         color:white;
@@ -401,7 +413,6 @@
         padding: 20px 0;
         width: 100%;
         text-align: center;
-
     }
     .js-login-text {
         width: 100%;
@@ -456,26 +467,24 @@
         userbar
     --------------------------------------------------------------*/
     #transferSelectedCharacter {
-        padding:10px;
+        display: none;
+        padding:10px 0 0 0;
+        margin:61px 20px 10px 0;
         height: 61px;
-        max-width: 275px;
+        width: 300px;
+        float:right;
         text-align: center;
         font-size: 14px verdana,arial,sans-serif;
         text-decoration: none;
         cursor:pointer;
         box-shadow: 0 0 7px 2px rgba(0, 0, 0, .2);
     }
-    #selectedthischaracter {
-        margin:-5px 0 5px 0;
-        height: 17px;
-        text-align: center;
-        box-shadow: 0 0 7px 2px rgba(0, 0, 0, .2);
-    }
 
     .staticCharacter li{
         height: 51px;
-        max-width: 275px;
+        width: 240px;
         margin:10px;
+        float:left;
         text-align: center;
         font-size: 14px verdana,arial,sans-serif;
         text-decoration: none;
