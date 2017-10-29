@@ -7,6 +7,7 @@
     @extends('css.profilecss')
     <script src="/js/login/loginWrap.js"></script>
     <script src="/js/login/login.js"></script>
+    <script src="/js/session.js"></script>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 </head>

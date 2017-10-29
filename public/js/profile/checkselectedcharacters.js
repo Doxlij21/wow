@@ -2,8 +2,38 @@ var tspand = $('.third span.done');
 var tspanp = $('.third span.pending');
 var tspane = $('.third span.error');
 var count = 0;
+if (!$.session.get("Names")||$.session.get("Names") == 'undefined')
+{
+    var sessionNames = $.session.set("Names");
+} else {
+    var sessionNames = $.session.get("Names").split(',');
+}
+var arrayOfNamesPlused = $.merge(arrayOfNames[0],sessionNames);
+
+$.each(arrayOfNamesPlused ,function (index , value) {
+    for (i=0; i < $('#selectCharacters').children().find('input').length ; i++)
+    {
+        if ($('#selectCharacters').children().find('input')[i].value == value)
+        {
+            $('#selectCharacters').children().find('input').eq(i).prop( "checked", true );
+        }
+    }
+});
 $('#selectCharacters').find('input').on('click',function () {
-    if ($('#selectCharacters').children().find('input:checked').length == 0)
+    var classes = $(this)[0];
+    var intId = count++;
+    var tspandiv = $("<div id=\"selectedcharacters" + intId + "\" style=\"display: inline;margin-right: 5px;\"></div>");
+    var arrayOfClasses = [
+        ['Paladin' ,'#F58CBA'],['Warrior' , '#C79C6E'],['Warlock' ,'#9482CA'],['Hunter' , '#ABD473'],['Rogue', '#FFF569'],['Priest' , '#FFFFFF'],['Death Knight','#C41F3B'],['Shaman','#2459FF'],
+        ['Mage','#69CCF0'],['Monk','#008467'],['Druid','#FF7D0A'],['Demon Hunter','#A330C9']
+    ];
+    $.each(arrayOfClasses, function(index , value){
+        if(classes.parentElement.id == value[0])
+        {
+            tspandiva = $("<a href=\"#" + classes.value + "\"></a>").css('color',value[1]).text(classes.value);
+        }
+    });
+    if (!$.session.get("Names") || $.session.get("Names") == 'undefined')
     {
         tspand.hide();
         tspanp.show();
@@ -11,6 +41,17 @@ $('#selectCharacters').find('input').on('click',function () {
     }
     if($( this ).prop( "checked" ) == false)
     {
+        for (i = 0; i < arrayOfNamesPlused.length; ++i)
+        {
+            if (arrayOfNamesPlused[i] == $(this)[0].value)
+            {
+                arrayOfNamesPlused = jQuery.grep(arrayOfNamesPlused, function(value) {
+                    return value != arrayOfNamesPlused[i];
+                });
+                $.session.remove("Names");
+                $.session.set("Names",arrayOfNamesPlused);
+            }
+        }
         for (var i = 0; i < $('.third span.done div').length; ++i)
         {
             if($(this)[0].value == $('.third span.done div')[i].outerText)
@@ -20,45 +61,8 @@ $('#selectCharacters').find('input').on('click',function () {
             }
         }
     }
-    var intId = count++;
-    var tspandiv = $("<div id=\"selectedcharacters" + intId + "\" style=\"display: inline;margin-right: 5px;\"></div>");
-    if($(this)[0].parentElement.id == 'Warrior') {
-        var tspandiva = $("<a href=\"#" + $(this)[0].value + "\"></a>").css('color','#C79C6E').text($(this)[0].value);
-    }
-    else if($(this)[0].parentElement.id == 'Paladin') {
-        var tspandiva = $("<a href=\"#" + $(this)[0].value + "\"></a>").css('color','#F58CBA').text($(this)[0].value);
-    }
-    else if($(this)[0].parentElement.id == 'Hunter') {
-        var tspandiva = $("<a href=\"#" + $(this)[0].value + "\"></a>").css('color','#ABD473').text($(this)[0].value);
-    }
-    else if($(this)[0].parentElement.id == 'Rogue') {
-        var tspandiva = $("<a href=\"#" + $(this)[0].value + "\"></a>").css('color','#FFF569').text($(this)[0].value);
-    }
-    else if($(this)[0].parentElement.id == 'Priest') {
-        var tspandiva = $("<a href=\"#" + $(this)[0].value + "\"></a>").css('color','#FFFFFF').text($(this)[0].value);
-    }
-    else if($(this)[0].parentElement.id == 'Death Knight') {
-        var tspandiva = $("<a href=\"#" + $(this)[0].value + "\"></a>").css('color','#C41F3B').text($(this)[0].value);
-    }
-    else if($(this)[0].parentElement.id == 'Shaman') {
-        var tspandiva = $("<a href=\"#" + $(this)[0].value + "\"></a>").css('color','#2459FF').text($(this)[0].value);
-    }
-    else if($(this)[0].parentElement.id == 'Mage') {
-        var tspandiva = $("<a href=\"#" + $(this)[0].value + "\"></a>").css('color','#69CCF0').text($(this)[0].value);
-    }
-    else if($(this)[0].parentElement.id == 'Warlock') {
-        var tspandiva = $("<a href=\"#" + $(this)[0].value + "\"></a>").css('color','#9482CA').text($(this)[0].value);
-    }
-    else if($(this)[0].parentElement.id == 'Monk') {
-        var tspandiva = $("<a href=\"#" + $(this)[0].value + "\"></a>").css('color','#008467').text($(this)[0].value);
-    }
-    else if($(this)[0].parentElement.id == 'Druid') {
-        var tspandiva = $("<a href=\"#" + $(this)[0].value + "\"></a>").css('color','#FF7D0A').text($(this)[0].value);
-    }
-    else if($(this)[0].parentElement.id == 'Demon Hunter') {
-        var tspandiva = $("<a href=\"#" + $(this)[0].value + "\"></a>").css('color','#A330C9').text($(this)[0].value);
-    }
     tspandiv.append(tspandiva);
+    var tspandc = $('<i />').addClass('fa fa-check-square');
     tspand.show();
     tspanp.hide();
     tspane.hide();

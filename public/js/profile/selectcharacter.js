@@ -1,6 +1,10 @@
 var sspanp = $('.second span.pending');
 var sspand = $('.second span.done');
 $('#staticCharacterOpt').find('li').on('click',function () {
+    if ($.session.get("Names"))
+    {
+        $.session.remove("Names");
+    } else {}
     var transfer = $(this)[0].nextElementSibling;
     var selected = $("#selectedStaticCharacter");
     var sspandc = $('<i />').addClass('fa fa-check-square');
