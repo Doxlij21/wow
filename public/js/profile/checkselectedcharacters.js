@@ -4,7 +4,7 @@ var tspane = $('.third span.error');
 var count = 0;
 if (!$.session.get("Names"))
 {
-    var sessionNames = $.session.set("Names");
+    var sessionNames = ['null'];
 } else {
     var sessionNames = $.session.get("Names").split(',');
 }
@@ -33,14 +33,14 @@ $('#selectCharacters').find('input').on('click',function () {
             tspandiva = $("<a href=\"#" + classes.value + "\"></a>").css('color',value[1]).text(classes.value);
         }
     });
-    if (!$.session.get("Names") || $.session.get("Names") == 'undefined')
-    {
-        tspand.hide();
-        tspanp.show();
-        tspane.hide();
-    }
     if($( this ).prop( "checked" ) == false)
     {
+        if (tspand.children().length == '1')
+        {
+            tspand.hide();
+            tspanp.show();
+            tspane.hide();
+        }
         for (i = 0; i < arrayOfNamesPlused.length; ++i)
         {
             if (arrayOfNamesPlused[i] == $(this)[0].value)

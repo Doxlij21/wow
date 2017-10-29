@@ -35,7 +35,6 @@ $('#staticCharacterOpt').find('li').on('click',function () {
 
     $("#staticUsers").load('?guildserver=' + guildserver  + '&guildname=' + guildname + ' #staticUsers', function () {
         $.getScript('/js/profile/classfilter.js');
-        $.getScript('/js/profile/checkselectedcharacters.js');
     });
 
 });
