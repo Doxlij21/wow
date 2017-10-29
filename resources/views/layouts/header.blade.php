@@ -12,7 +12,19 @@
                     <div style="float: left;margin-right: 10px;" class="hello">
                         notifications
                             <i class="fa fa-user" aria-hidden="true"></i>
-                            <a href="{{ route('profile.index' , Session::get('lang')) }}">{{Auth::user()->username}}</a>
+                        <?php
+                            if (\Illuminate\Support\Facades\Auth::guest()) {
+                                if (\Illuminate\Support\Facades\Session::has('lang')) {
+                                    $lang = \Illuminate\Support\Facades\Session::get('lang');
+                                } else {
+                                    $lang = \Illuminate\Support\Facades\Config::get('app.locale');
+                                }
+                            } else {
+                                $lang = \App\User::find(\Illuminate\Support\Facades\Auth::user()->id)->lang;
+                            }
+                        ?>
+
+                            <a href="{{ route('profile.index' , $lang )}}">{{Auth::user()->username}}</a>
                     </div>
 
                     <a href="{{ route('logout') }}" style="display: block; float: left;" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
