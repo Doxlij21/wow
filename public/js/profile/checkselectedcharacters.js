@@ -2,7 +2,7 @@ var tspand = $('.third span.done');
 var tspanp = $('.third span.pending');
 var tspane = $('.third span.error');
 var count = 0;
-if (!$.session.get("Names")||$.session.get("Names") == 'undefined')
+if (!$.session.get("Names"))
 {
     var sessionNames = $.session.set("Names");
 } else {
