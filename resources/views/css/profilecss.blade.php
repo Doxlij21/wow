@@ -52,6 +52,9 @@
     li{
         list-style-type: none;
     }
+    li#logo {
+        margin-left:20px;
+    }
     #profileContent {
         float: left;
         width: auto;
@@ -59,15 +62,48 @@
         padding:0 0 0 160px;
 
     }
-    #profileMenu {
-        float:left;
-        height: 100%;
-        width: 150px;
-        margin: 0px 0px 0px 8px;
-    }
+
     @media screen and (max-width: 422px) {
         #content {
             width: auto;
+            margin: 58px 0px 0px 0px;
+            padding: 0px 0 0 0 0px;
+        }
+        #profileContent {
+            float: left;
+            width: auto;
+            margin: 20px 0px 0px 13px;
+            padding:0 0 0 0px;
+        }
+        #title {
+            width: auto;
+            height:auto;
+            background-image: url(/img/profile/title-create_static.png);
+        }
+        #staticTitle{
+            width: auto;
+            height:auto;
+            padding:0px 0 0 0px;
+        }
+        #profileMenu {
+            display: none;
+        }
+        .mytabs-container {
+            clear: both;
+            padding: 13px 0 13px 0;
+            margin:0 0px 0px 0px;
+            top: 3px;
+        }
+        #classFilter {
+            font-weight: bold;
+            font-size: 11px;
+            width: auto;
+            padding:20px;
+            margin:0 0 5px 0px;
+            cursor:pointer;
+        }
+        #staticHelperblock {
+            display: none;
         }
     }
 
@@ -246,7 +282,6 @@
         text-align: center;
     }
 
-    /* if an icon anchor has a span, hide the span */
     .fa + span {
         width: 0;
         height: 0;
@@ -335,7 +370,10 @@
         background: #1c2129;
         box-shadow: 0 0 7px 4px rgba(0, 0, 0, .2);
     }
-
+    #profileMenu {
+        position: fixed;
+        margin: 0px 0px 0px 8px;
+    }
     #profileMenu a {
         text-decoration: none;
         font:14px verdana,arial,sans-serif;
@@ -373,18 +411,22 @@
 
     .mytabs-container {
         clear: both;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
         padding: 13px;
-        margin:0 170px 0 160px;
+        margin:0 170px 0 220px;
         top: 3px;
     }
     #classFilter {
+        height: 25px;
         font-weight: bold;
         font-size: 11px;
         width: auto;
         padding:20px;
-        margin:0 0 5px 160px;
+        margin:0 0 5px 220px;
         cursor:pointer;
+        box-shadow: 0 0 7px 1px #c0c0c0;
+    }
+    #selectCharacters {
+        margin:0px 0px 0px 5px;
     }
     #staticTitle{
         padding:118px 0 0 97px;
@@ -399,10 +441,10 @@
     }
 
     .third {
-        padding:20px 0 0 0;
+        padding:5px 0 10px 0;
         max-width: 1000px;
         float:left;
-        margin:0 0 0 160px;
+        margin:0 0 0 230px;
     }
     .third a {
         color:white;
@@ -411,7 +453,6 @@
     }
     .buttons {
         padding: 20px 0;
-        width: 100%;
         text-align: center;
     }
     .js-login-text {
@@ -468,33 +509,45 @@
     --------------------------------------------------------------*/
     #transferSelectedCharacter {
         display: none;
-        padding:10px 0 0 0;
-        margin:61px 20px 10px 0;
-        height: 61px;
-        width: 300px;
+        margin:50px 0px 0px 0;
+        padding: 0px 0 0 0px;
+        height: 118px;
+        width: 282px;
+        background-image: url("/img/profile/userrl.png");
+        background-repeat: no-repeat;
         float:right;
         text-align: center;
         font-size: 14px verdana,arial,sans-serif;
         text-decoration: none;
         cursor:pointer;
-        box-shadow: 0 0 7px 2px rgba(0, 0, 0, .2);
+    }
+    #wowname {
+        margin:28px 0px 0px 50px;
+    }
+    #wowguild {
+        margin:10px 0px 0px 0px;
+    }
+    .vrl {
+        padding:10px 0px 0px 0px;
     }
 
     .staticCharacter li{
-        height: 51px;
-        width: 240px;
-        margin:10px;
+        height: 60px;
+        width: 232px;
+        margin:20px 0 0 10px;
+        padding: 10px 0 0 0px;
+        background-image: url("/img/profile/userfraim.png");
+        background-repeat: no-repeat;
         float:left;
         text-align: center;
         font-size: 14px verdana,arial,sans-serif;
         text-decoration: none;
         cursor:pointer;
-        box-shadow: 0 0 7px 2px rgba(0, 0, 0, .2);
     }
     .staticCharacter li:hover {
-        height: 51px;
-        max-width: 276px;
-        box-shadow: 0 0 7px 5px rgba(0, 0, 0, .2);
+        height: 60px;
+        max-width: 232px;
+        box-shadow: 0 0 7px 1px #c0c0c0;
     }
 
     .staticCharacter a{
@@ -506,9 +559,12 @@
         list-style: none;
     }
     .staticCharacter img {
-        height: 50px;
-        width: 50px;
+        height: 60px;
+        width: 60px;
         float:left;
+        padding: -10px 0 0 10px;
+        margin: -5px 0 0 5px;
+        border-radius: 61px;
     }
     /*--------------------------------------------------------------
         popup and overlay

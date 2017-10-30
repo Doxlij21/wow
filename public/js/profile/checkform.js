@@ -29,18 +29,7 @@ function check() {
     var fspanem = $('<i />').addClass('fa fa-minus-square');
     var tspanem = $('<i />').addClass('fa fa-minus-square');
     var fspanep = $('<i />').addClass('fa fa-hand-pointer-o').css('color','#cecece');
-    if (!$("input[name='static_name']")[0].value)
-    {
-
-        if ($('#selectCharacters').find('input:checked').length == 0)
-        {
-            tspand.hide();
-            tspanp.hide();
-            tspane.text('Please select atleast one static member');
-            tspane.append(tspanem);
-            tspane.show();
-        }
-
+    if (!$("input[name='static_name']")[0].value) {
         fspand.hide();
         fspanp.hide();
         fspane.show();
@@ -48,7 +37,13 @@ function check() {
         fspane.append(fspanem);
         fspane.append(fspanep);
         return false;
-    } else {
-        return true;
+    }
+    if ($('#selectCharacters').find('input:checked').length == 0) {
+        tspand.hide();
+        tspanp.hide();
+        tspane.text('Please select atleast one static member');
+        tspane.append(tspanem);
+        tspane.show();
+        return false;
     }
 }

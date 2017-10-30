@@ -115,16 +115,11 @@
                                     <input id="static_name" type="text" name="static_name">
                                 </div>
                             </div>
-
                             <div id="profileMenu">
                                 <form class="form" action="{{route('profile.post.menu', $user->id)}}" enctype="multipart/form-data">
                                     <ul class="profileMenu">
-                                        <li class="profileMenuItem">
-                                            <a href="#create static"> Create static </a>
-                                        </li>
-                                        <li class="profileMenuItem">
-                                            <a href="#create static"> Battle.net account </a>
-                                        </li>
+                                        <li class="profileMenuItem"><a href="#create static"> Create static </a></li>
+                                        <li class="profileMenuItem"><a href="#create static"> Battle.net account </a></li>
                                     </ul>
                                     {!! csrf_field() !!}
                                 </form>
@@ -162,15 +157,15 @@
                                         <ul id="staticCharacterOpt">
                                             @foreach($wowresponse->characters as $wowr)
                                                 @if($wowr->level == 110)
-                                                    <li>{{$wowr->name}} , {{$wowr->realm}} <img src="https://render-eu.worldofwarcraft.com/character/{{$wowr->thumbnail}}">
+                                                    <li>{{$wowr->name}}-{{$wowr->realm}} <img src="https://render-eu.worldofwarcraft.com/character/{{$wowr->thumbnail}}">
                                                     </li>
                                                     <div id="transferSelectedCharacter">
-                                                        <div>
-                                                            {{$wowr->name}} , {{$wowr->realm}} <img src="https://render-eu.worldofwarcraft.com/character/{{$wowr->thumbnail}}">
+                                                        <div id="wowname">
+                                                            {{$wowr->name}}-{{$wowr->realm}} <img src="https://render-eu.worldofwarcraft.com/character/{{$wowr->thumbnail}}">
                                                             <input name="charactername" value="{{$wowr->name}}" style="display: none">
                                                         </div>
-                                                        <div>
-                                                            In this guild: {{$wowr->guild}}
+                                                        <div id="wowguild">
+                                                            {{$wowr->guild}}
                                                             <input id="guildnameinput" name="guildname" value="{{$wowr->guild}}" style="display: none">
                                                             <input id="guildserverinput" name="guildserver" value="{{$wowr->guildRealm}}" style="display: none">
                                                         </div>
@@ -358,20 +353,20 @@
                                                         @endif
                                                     @endif
                                                 @endforeach
+                                                    <div class="buttons">
+                                                        <div class="form-group">
+                                                            <button onSubmit="return check()" type="submit" class="primary button">
+                                                <span class="js-login-text">
+                                                    create static
+                                                </span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                             @else
                                             @endif
                                         </div>
                                     </div>
                                     <input type="hidden" name="_token" value="{{Session::token()}}">
-                                    <div class="buttons">
-                                        <div class="form-group">
-                                            <button onSubmit="return check()" type="submit" class="primary button">
-                                                <span class="js-login-text">
-                                                    create static
-                                                </span>
-                                            </button>
-                                        </div>
-                                    </div>
                                 @else
                                 @endif
                             </div>

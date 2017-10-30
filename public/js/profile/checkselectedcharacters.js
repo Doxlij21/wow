@@ -62,11 +62,9 @@ $('#selectCharacters').find('input').on('click',function () {
         }
     }
     tspandiv.append(tspandiva);
-    var tspandc = $('<i />').addClass('fa fa-check-square');
     tspand.show();
     tspanp.hide();
     tspane.hide();
     tspand.append(tspandiv);
     $(".selectedcharacters" + intId).find('a').html($(this)[0].value);
-    tspandiv.append(tspandc);
 });
