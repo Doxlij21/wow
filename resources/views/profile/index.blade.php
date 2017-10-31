@@ -109,10 +109,9 @@
                             </div>
                         </div>
                         <div id="content">
-
                             <div id="title">
                                 <div id="staticTitle">
-                                    <input id="static_name" type="text" name="static_name">
+                                    <input id="static_name" type="text" name="static_name" placeholder="Choose you'r static title">
                                 </div>
                             </div>
                             <div id="profileMenu">
@@ -158,6 +157,7 @@
                                             @foreach($wowresponse->characters as $wowr)
                                                 @if($wowr->level == 110)
                                                     <li>{{$wowr->name}}-{{$wowr->realm}} <img src="https://render-eu.worldofwarcraft.com/character/{{$wowr->thumbnail}}">
+                                                        <div id="Assrl">Assign RL</div>
                                                     </li>
                                                     <div id="transferSelectedCharacter">
                                                         <div id="wowname">

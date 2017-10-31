@@ -433,7 +433,7 @@
 
     }
     #static_name {
-        width:188px;
+        width:190px;
     }
     #staticHelperblock {
         position: fixed;
@@ -525,7 +525,10 @@
         margin:28px 0px 0px 50px;
     }
     #wowguild {
-        margin:10px 0px 0px 0px;
+        margin:8px 0px 0px 0px;
+    }
+    #Assrl {
+        padding:8px 0px 0px 10px;
     }
     .vrl {
         padding:10px 0px 0px 0px;
@@ -565,6 +568,12 @@
         padding: -10px 0 0 10px;
         margin: -5px 0 0 5px;
         border-radius: 61px;
+    }
+    input[type=text] {
+        color:#999;
+    }
+    input[type=text]:focus {
+        color:#000;
     }
     /*--------------------------------------------------------------
         popup and overlay

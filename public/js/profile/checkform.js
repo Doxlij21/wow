@@ -10,6 +10,7 @@ $("input[name='static_name']").on('input', function() {
     var fspadpa = $('<a href="#static_name"></a>');
 
     fspadpa.append(fspandp);
+    if (!$("input[name='static_name']")[0].value && $("input[name='static_name']").attr('placeholder'))
     if (!$("input[name='static_name']")[0].value)
     {
         fspanp.show();
