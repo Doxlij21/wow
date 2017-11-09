@@ -94,338 +94,462 @@
 <content>
     <div id="staticHelper">
         <div class="helperWrap">
-            @if($menuFilter->menu_name == 'Create static')
-                @if(count($user->battlenet_token) > 0)
-                    <form class="form" action="{{route('profile.create.static')}}" enctype="multipart/form-data" onSubmit="return check()">
-                        <div id="staticHelperblock">
-                            <div class="first">
-                                <span class="pending">Choose you'r static title <a href="#static_name"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></a></span>
-                                <span style="color: green;display: none" class="done"></span>
-                                <span style="color: red;display: none" class="error"></span>
-                            </div>
-                            <div style="width: 240.844px;" class="second">
-                                <span class="pending">Choose static rl<a href="#staticCharacterOpt"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></a></span>
-                                <span style="color: green;display: none" class="done"></span>
-                            </div>
-                        </div>
-                        <div id="content">
-                            <div id="title">
-                                <div id="staticTitle">
-                                    <input id="static_name" type="text" name="static_name" placeholder="Choose you'r static title">
+            @if(count($menuFilter)>0)
+                @if($menuFilter->menu_name == 'Create static')
+                    @if(count($user->battlenet_token) > 0)
+                        <form class="form" action="{{route('profile.create.static')}}" enctype="multipart/form-data" onSubmit="return check()">
+                            <div id="staticHelperblock">
+                                <div class="first">
+                                    <span class="pending">Choose you'r static title <a href="#static_name"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></a></span>
+                                    <span style="color: green;display: none" class="done"></span>
+                                    <span style="color: red;display: none" class="error"></span>
+                                </div>
+                                <div style="width: 240.844px;" class="second">
+                                    <span class="pending">Choose static rl<a href="#staticCharacterOpt"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></a></span>
+                                    <span style="color: green;display: none" class="done"></span>
                                 </div>
                             </div>
-                            <div id="profileMenu">
-                                <form class="form" action="{{route('profile.post.menu', $user->id)}}" enctype="multipart/form-data">
-                                    <ul class="profileMenu">
-                                        <li class="profileMenuItem"><a href="#create static"> Create static </a></li>
-                                        <li class="profileMenuItem"><a href="#create static"> Battle.net account </a></li>
-                                    </ul>
-                                    {!! csrf_field() !!}
-                                </form>
-                            </div>
-                            <div>
-                                <script>
-                                    var profilemenuitem = $('.profileMenuItem');
-                                    $.ajaxSetup({
-                                        headers: {
-                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                        }
-                                    });
-                                    profilemenuitem.on("click", function (event) {
-                                        event.preventDefault();
-                                        var text = this.innerText;
-                                        $.ajax
-                                        ({
-                                            type: 'POST',
-                                            url: '{{route('profile.post.menu', $user->id)}}',
-                                            data: {name: text},
-
-                                            success: function (data) {
-                                            }
-                                            , error: function (data) {
-                                                debugger;
-                                                alert("Error");
+                            <div id="content">
+                                <div id="title">
+                                    <div id="staticTitle">
+                                        <input id="static_name" type="text" name="static_name" placeholder="Choose you'r static title">
+                                    </div>
+                                </div>
+                                <div id="profileMenu">
+                                    <form class="form" action="{{route('profile.post.menu', $user->id)}}" enctype="multipart/form-data">
+                                        <ul class="profileMenu">
+                                            <li class="profileMenuItem"><a href="#profile">User profile</a></li>
+                                            <li class="profileMenuItem"><a href="#static">Create static</a></li>
+                                            <li class="profileMenuItem"><a href="#battlenet">Battle.net account</a></li>
+                                        </ul>
+                                        {!! csrf_field() !!}
+                                    </form>
+                                </div>
+                                <div>
+                                    <script>
+                                        var profilemenuitem = $('.profileMenuItem');
+                                        $.ajaxSetup({
+                                            headers: {
+                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                             }
                                         });
-                                    });
-                                </script>
-                            </div>
-                            <div id="profileContent">
-                                <div id="static">
-                                    <div class="staticCharacter">
-                                        <ul id="staticCharacterOpt">
-                                            @foreach($wowresponse->characters as $wowr)
-                                                @if($wowr->level == 110)
-                                                    <li>{{$wowr->name}}-{{$wowr->realm}} <img src="https://render-eu.worldofwarcraft.com/character/{{$wowr->thumbnail}}">
-                                                        <div id="Assrl">Assign RL</div>
-                                                    </li>
-                                                    <div id="transferSelectedCharacter">
-                                                        <div id="wowname">
-                                                            {{$wowr->name}}-{{$wowr->realm}} <img src="https://render-eu.worldofwarcraft.com/character/{{$wowr->thumbnail}}">
-                                                            <input name="charactername" value="{{$wowr->name}}" style="display: none">
-                                                        </div>
-                                                        <div id="wowguild">
-                                                            {{$wowr->guild}}
-                                                            <input id="guildnameinput" name="guildname" value="{{$wowr->guild}}" style="display: none">
-                                                            <input id="guildserverinput" name="guildserver" value="{{$wowr->guildRealm}}" style="display: none">
-                                                        </div>
-                                                    </div>
-                                                @else
-                                                @endif
-                                            @endforeach
-                                        </ul>
-                                        <div id="selectedStaticCharacter">
+                                        profilemenuitem.on("click", function (event) {
+                                            event.preventDefault();
+                                            var text = this.innerText;
+                                            $.ajax
+                                            ({
+                                                type: 'POST',
+                                                url: '{{route('profile.post.menu', $user->id)}}',
+                                                data: {name: text},
 
+                                                success: function (data) {
+                                                    $('.helperWrap').load(' .helperWrap')
+                                                }
+                                                , error: function (data) {
+                                                    debugger;
+                                                    alert("Error");
+                                                }
+                                            });
+                                        });
+                                    </script>
+                                </div>
+                                <div id="profileContent">
+                                    <div id="static">
+                                        <div class="staticCharacter">
+                                            <ul id="staticCharacterOpt">
+                                                @foreach($wowresponse->characters as $wowr)
+                                                    @if($wowr->level == 110)
+                                                        <li>{{$wowr->name}}-{{$wowr->realm}} <img src="https://render-eu.worldofwarcraft.com/character/{{$wowr->thumbnail}}">
+                                                            <div id="Assrl">Assign RL</div>
+                                                        </li>
+                                                        <div id="transferSelectedCharacter">
+                                                            <div id="wowname">
+                                                                {{$wowr->name}}-{{$wowr->realm}} <img src="https://render-eu.worldofwarcraft.com/character/{{$wowr->thumbnail}}">
+                                                                <input name="charactername" value="{{$wowr->name}}" style="display: none">
+                                                            </div>
+                                                            <div id="wowguild">
+                                                                {{$wowr->guild}}
+                                                                <input id="guildnameinput" name="guildname" value="{{$wowr->guild}}" style="display: none">
+                                                                <input id="guildserverinput" name="guildserver" value="{{$wowr->guildRealm}}" style="display: none">
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                    @endif
+                                                @endforeach
+                                            </ul>
+                                            <div id="selectedStaticCharacter">
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div id="staticUsers">
-                                @if (count(request()->guildserver) > 0)
-                                    <?php
-                                    $guildserver = $_GET['guildserver'];
-                                    $guildname = str_replace(' ', '%20', $_GET['guildname']);
-                                    $apikey = "27hkqmbn3y4ew7gsr66pqvnf7gfqtb43";
-                                    $parseguild = json_decode(file_get_contents("https://$user->battlenet_region.api.battle.net/wow/guild/$guildserver/$guildname?fields=members&apikey=$apikey"));
-                                    $filteredguild = collect($parseguild->members)->where('character.level', '110');
-                                    ?>
-                                    <div style="width: auto;" class="third">
-                                        <span class="pending">Select static members:</span>
-                                        <span style="color: green;display: none" class="done">Selected static members:</span>
-                                        <span style="color: red;display: none" class="error"></span>
-                                    </div>
-                                    <div id="classFilterWrap">
-                                        <ul class="mytabs" id="classFilter">
-                                            <li class="" data-cat-class="Warrior"><a class="Warrior">Warrior</a></li>
-                                            <li class="" data-cat-class="Paladin"><a class="Paladin">Paladin</a></li>
-                                            <li class="" data-cat-class="Hunter"><a class="Hunter">Hunter</a></li>
-                                            <li class="" data-cat-class="Rogue"><a class="Rogue">Rogue</a></li>
-                                            <li class="" data-cat-class="Priest"><a class="Priest">Priest</a></li>
-                                            <li class="" data-cat-class="Death Knight"><a class="Deathknight">Death Knight</a></li>
-                                            <li class="" data-cat-class="Shaman"><a class="Shaman">Shaman</a></li>
-                                            <li class="" data-cat-class="Mage"><a class="Mage">Mage</a></li>
-                                            <li class="" data-cat-class="Warlock"><a class="Warlock">Warlock</a></li>
-                                            <li class="" data-cat-class="Monk"><a class="Monk">Monk</a></li>
-                                            <li class="" data-cat-class="Druid"><a class="Druid">Druid</a></li>
-                                            <li class="" data-cat-class="Demon Hunter"><a class="Demonhunter">Demon Hunter</a></li>
-                                            <li class="" data-cat-class="All"><a class="All">All</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="mytabs-container" id="tabs-container">
-                                        <div id="selectCharacters">
-                                            @if(count(request()->class) > 0)
-                                                @foreach($filteredguild as $fguild)
-                                                    @if($_GET['class'] == 'All')
+                                <div id="staticUsers">
+                                    @if (count(request()->guildserver) > 0)
+                                        <?php
+                                        $guildserver = $_GET['guildserver'];
+                                        $guildname = str_replace(' ', '%20', $_GET['guildname']);
+                                        $apikey = "27hkqmbn3y4ew7gsr66pqvnf7gfqtb43";
+                                        $parseguild = json_decode(file_get_contents("https://$user->battlenet_region.api.battle.net/wow/guild/$guildserver/$guildname?fields=members&apikey=$apikey"));
+                                        $filteredguild = collect($parseguild->members)->where('character.level', '110');
+                                        ?>
+                                        <div style="width: auto;" class="third">
+                                            <span class="pending">Select static members:</span>
+                                            <span style="color: green;display: none" class="done">Selected static members:</span>
+                                            <span style="color: red;display: none" class="error"></span>
+                                        </div>
+                                        <div id="classFilterWrap">
+                                            <ul class="mytabs" id="classFilter">
+                                                <li class="" data-cat-class="Warrior"><a class="Warrior">Warrior</a></li>
+                                                <li class="" data-cat-class="Paladin"><a class="Paladin">Paladin</a></li>
+                                                <li class="" data-cat-class="Hunter"><a class="Hunter">Hunter</a></li>
+                                                <li class="" data-cat-class="Rogue"><a class="Rogue">Rogue</a></li>
+                                                <li class="" data-cat-class="Priest"><a class="Priest">Priest</a></li>
+                                                <li class="" data-cat-class="Death Knight"><a class="Deathknight">Death Knight</a></li>
+                                                <li class="" data-cat-class="Shaman"><a class="Shaman">Shaman</a></li>
+                                                <li class="" data-cat-class="Mage"><a class="Mage">Mage</a></li>
+                                                <li class="" data-cat-class="Warlock"><a class="Warlock">Warlock</a></li>
+                                                <li class="" data-cat-class="Monk"><a class="Monk">Monk</a></li>
+                                                <li class="" data-cat-class="Druid"><a class="Druid">Druid</a></li>
+                                                <li class="" data-cat-class="Demon Hunter"><a class="Demonhunter">Demon Hunter</a></li>
+                                                <li class="" data-cat-class="All"><a class="All">All</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="mytabs-container" id="tabs-container">
+                                            <div id="selectCharacters">
+                                                @if(count(request()->class) > 0)
+                                                    @foreach($filteredguild as $fguild)
+                                                        @if($_GET['class'] == 'All')
+                                                            @if($fguild->character->class == 1)
+                                                                <div class="active" id="Warrior" dataclass="Warrior">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Warrior">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @elseif($fguild->character->class == 2)
+                                                                <div class="active" id="Paladin" dataclass="Paladin">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Paladin">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @elseif($fguild->character->class == 3)
+                                                                <div class="active" id="Hunter" dataclass="Hunter">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Hunter">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @elseif($fguild->character->class == 4)
+                                                                <div class="active" id="Rogue" dataclass="Rogue">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Rogue">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @elseif($fguild->character->class == 5)
+                                                                <div class="active" id="Priest" dataclass="Priest">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Priest">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @elseif($fguild->character->class == 6)
+                                                                <div class="active" id="Death Knight" dataclass="Death Knight">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Deathknight">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @elseif($fguild->character->class == 7)
+                                                                <div class="active" id="Shaman" dataclass="Shaman">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Shaman">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @elseif($fguild->character->class == 8)
+                                                                <div class="active" id="Mage" dataclass="Mage">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Mage">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @elseif($fguild->character->class == 9)
+                                                                <div class="active" id="Warlock" dataclass="Warlock">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Warlock">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @elseif($fguild->character->class == 10)
+                                                                <div class="active" id="Monk" dataclass="Monk">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Monk">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @elseif($fguild->character->class == 11)
+                                                                <div class="active" id="Druid" dataclass="Druid">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Druid">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @elseif($fguild->character->class == 12)
+                                                                <div class="active" id="Demon Hunter" dataclass="Demon Hunter">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Demonhunter">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @endif
+                                                        @else
+                                                        @endif
                                                         @if($fguild->character->class == 1)
-                                                            <div class="active" id="Warrior" dataclass="Warrior">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Warrior">{{$fguild->character->name}}</span>
-                                                            </div>
+                                                            @if($_GET['class'] == 'Warrior')
+                                                                <div class="active" id="Warrior" dataclass="Warrior">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Warrior">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @else
+                                                            @endif
                                                         @elseif($fguild->character->class == 2)
-                                                            <div class="active" id="Paladin" dataclass="Paladin">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Paladin">{{$fguild->character->name}}</span>
-                                                            </div>
+                                                            @if($_GET['class'] == 'Paladin')
+                                                                <div class="active" id="Paladin" dataclass="Paladin">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Paladin">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @else
+                                                            @endif
                                                         @elseif($fguild->character->class == 3)
-                                                            <div class="active" id="Hunter" dataclass="Hunter">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Hunter">{{$fguild->character->name}}</span>
-                                                            </div>
+                                                            @if($_GET['class'] == 'Hunter')
+                                                                <div class="active" id="Hunter" dataclass="Hunter">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Hunter">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @else
+                                                            @endif
                                                         @elseif($fguild->character->class == 4)
-                                                            <div class="active" id="Rogue" dataclass="Rogue">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Rogue">{{$fguild->character->name}}</span>
-                                                            </div>
+                                                            @if($_GET['class'] == 'Rogue')
+                                                                <div class="active" id="Rogue" dataclass="Rogue">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Rogue">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @else
+                                                            @endif
                                                         @elseif($fguild->character->class == 5)
-                                                            <div class="active" id="Priest" dataclass="Priest">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Priest">{{$fguild->character->name}}</span>
-                                                            </div>
+                                                            @if($_GET['class'] == 'Priest')
+                                                                <div class="active" id="Priest" dataclass="Priest">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Priest">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @else
+                                                            @endif
                                                         @elseif($fguild->character->class == 6)
-                                                            <div class="active" id="Death Knight" dataclass="Death Knight">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Deathknight">{{$fguild->character->name}}</span>
-                                                            </div>
+                                                            @if($_GET['class'] == 'Death Knight')
+                                                                <div class="active" id="Death Knight" dataclass="Death Knight">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Deathknight">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @else
+                                                            @endif
                                                         @elseif($fguild->character->class == 7)
-                                                            <div class="active" id="Shaman" dataclass="Shaman">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Shaman">{{$fguild->character->name}}</span>
-                                                            </div>
+                                                            @if($_GET['class'] == 'Shaman')
+                                                                <div class="active" id="Shaman" dataclass="Shaman">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Shaman">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @else
+                                                            @endif
                                                         @elseif($fguild->character->class == 8)
-                                                            <div class="active" id="Mage" dataclass="Mage">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Mage">{{$fguild->character->name}}</span>
-                                                            </div>
+                                                            @if($_GET['class'] == 'Mage')
+                                                                <div class="active" id="Mage" dataclass="Mage">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Mage">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @else
+                                                            @endif
                                                         @elseif($fguild->character->class == 9)
-                                                            <div class="active" id="Warlock" dataclass="Warlock">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Warlock">{{$fguild->character->name}}</span>
-                                                            </div>
+                                                            @if($_GET['class'] == 'Warlock')
+                                                                <div class="active" id="Warlock" dataclass="Warlock">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Warlock">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @else
+                                                            @endif
                                                         @elseif($fguild->character->class == 10)
-                                                            <div class="active" id="Monk" dataclass="Monk">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Monk">{{$fguild->character->name}}</span>
-                                                            </div>
+                                                            @if($_GET['class'] == 'Monk')
+                                                                <div class="active" id="Monk" dataclass="Monk">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Monk">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @else
+                                                            @endif
                                                         @elseif($fguild->character->class == 11)
-                                                            <div class="active" id="Druid" dataclass="Druid">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Druid">{{$fguild->character->name}}</span>
-                                                            </div>
+                                                            @if($_GET['class'] == 'Druid')
+                                                                <div class="active" id="Druid" dataclass="Druid">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Druid">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @else
+                                                            @endif
                                                         @elseif($fguild->character->class == 12)
-                                                            <div class="active" id="Demon Hunter" dataclass="Demon Hunter">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Demonhunter">{{$fguild->character->name}}</span>
-                                                            </div>
+                                                            @if($_GET['class'] == 'Demon Hunter')
+                                                                <div class="active" id="Demon Hunter" dataclass="Demon Hunter">
+                                                                    <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Demonhunter">{{$fguild->character->name}}</span>
+                                                                </div>
+                                                            @else
+                                                            @endif
                                                         @endif
-                                                    @else
-                                                    @endif
-                                                    @if($fguild->character->class == 1)
-                                                        @if($_GET['class'] == 'Warrior')
-                                                            <div class="active" id="Warrior" dataclass="Warrior">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Warrior">{{$fguild->character->name}}</span>
-                                                            </div>
-                                                        @else
-                                                        @endif
-                                                    @elseif($fguild->character->class == 2)
-                                                        @if($_GET['class'] == 'Paladin')
-                                                            <div class="active" id="Paladin" dataclass="Paladin">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Paladin">{{$fguild->character->name}}</span>
-                                                            </div>
-                                                        @else
-                                                        @endif
-                                                    @elseif($fguild->character->class == 3)
-                                                        @if($_GET['class'] == 'Hunter')
-                                                            <div class="active" id="Hunter" dataclass="Hunter">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Hunter">{{$fguild->character->name}}</span>
-                                                            </div>
-                                                        @else
-                                                        @endif
-                                                    @elseif($fguild->character->class == 4)
-                                                        @if($_GET['class'] == 'Rogue')
-                                                            <div class="active" id="Rogue" dataclass="Rogue">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Rogue">{{$fguild->character->name}}</span>
-                                                            </div>
-                                                        @else
-                                                        @endif
-                                                    @elseif($fguild->character->class == 5)
-                                                        @if($_GET['class'] == 'Priest')
-                                                            <div class="active" id="Priest" dataclass="Priest">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Priest">{{$fguild->character->name}}</span>
-                                                            </div>
-                                                        @else
-                                                        @endif
-                                                    @elseif($fguild->character->class == 6)
-                                                        @if($_GET['class'] == 'Death Knight')
-                                                            <div class="active" id="Death Knight" dataclass="Death Knight">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Deathknight">{{$fguild->character->name}}</span>
-                                                            </div>
-                                                        @else
-                                                        @endif
-                                                    @elseif($fguild->character->class == 7)
-                                                        @if($_GET['class'] == 'Shaman')
-                                                            <div class="active" id="Shaman" dataclass="Shaman">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Shaman">{{$fguild->character->name}}</span>
-                                                            </div>
-                                                        @else
-                                                        @endif
-                                                    @elseif($fguild->character->class == 8)
-                                                        @if($_GET['class'] == 'Mage')
-                                                            <div class="active" id="Mage" dataclass="Mage">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Mage">{{$fguild->character->name}}</span>
-                                                            </div>
-                                                        @else
-                                                        @endif
-                                                    @elseif($fguild->character->class == 9)
-                                                        @if($_GET['class'] == 'Warlock')
-                                                            <div class="active" id="Warlock" dataclass="Warlock">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Warlock">{{$fguild->character->name}}</span>
-                                                            </div>
-                                                        @else
-                                                        @endif
-                                                    @elseif($fguild->character->class == 10)
-                                                        @if($_GET['class'] == 'Monk')
-                                                            <div class="active" id="Monk" dataclass="Monk">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Monk">{{$fguild->character->name}}</span>
-                                                            </div>
-                                                        @else
-                                                        @endif
-                                                    @elseif($fguild->character->class == 11)
-                                                        @if($_GET['class'] == 'Druid')
-                                                            <div class="active" id="Druid" dataclass="Druid">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Druid">{{$fguild->character->name}}</span>
-                                                            </div>
-                                                        @else
-                                                        @endif
-                                                    @elseif($fguild->character->class == 12)
-                                                        @if($_GET['class'] == 'Demon Hunter')
-                                                            <div class="active" id="Demon Hunter" dataclass="Demon Hunter">
-                                                                <input id="{{$fguild->character->name}}" name="character_name[]" value="{{$fguild->character->name}}" type="checkbox"> <span class="Demonhunter">{{$fguild->character->name}}</span>
-                                                            </div>
-                                                        @else
-                                                        @endif
-                                                    @endif
-                                                @endforeach
+                                                    @endforeach
                                                     <div class="buttons">
                                                         <div class="form-group">
                                                             <button onSubmit="return check()" type="submit" class="primary button">
-                                                <span class="js-login-text">
-                                                    create static
-                                                </span>
+                                                    <span class="js-login-text">
+                                                        create static
+                                                    </span>
                                                             </button>
                                                         </div>
                                                     </div>
-                                            @else
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <input type="hidden" name="_token" value="{{Session::token()}}">
-                                @else
-                                @endif
-                            </div>
-                        </div>
-                    </form>
-                @else
-                    Please connect battle.net account
-                @endif
-            @elseif($menuFilter->menu_name == 'Battle.net account')
-                <form target="_blank" method="get" action="{{route('battlenet.oauth' , \App\User::find(Auth::user()->id)->lang)}}">
-                    <div id="battlenet">
-                        <div class="region">
-                            @if(count($user->battlenet_token) > 0)
-                                @if($check_token->exp >= time())
-                                    <label for="region" class="control-label">Change you'r region</label>
-                                @else
-                                    <label for="region" class="control-label">You'r region</label>
-                                @endif
-                            @else
-                                <label for="region" class="control-label">Select you'r region</label>
-                            @endif
-                            <select id="timezone" name="region">
-                                <option id="region" name="region" value='eu'> Europe</option>
-                                <option id="region" name="region" value='us'> USA</option>
-                                <option id="region" name="region" value='apac'> Asia-Pacific</option>
-                                <option id="region" name="region" value='cn'> China</option>
-                            </select>
-                        </div>
-                        <div>
-                            <div class="buttons" style="padding: 20px 0;border-top: 1px solid #dad8de;width: 100%;text-align: center;">
-                                <div class="form-group">
-                                    <button type="submit" style="width: 71px;height: 32px;" class="primary button">
-                                        <span style="line-height: 0px !important;" class="js-login-text">
-                                            @if(count($user->battlenet_token) > 0)
-                                                @if($check_token->exp >= time())
-                                                    Change
                                                 @else
-                                                    Bind
                                                 @endif
-                                            @else
-                                                Login
-                                            @endif
-                                        </span>
-                                    </button>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="_token" value="{{Session::token()}}">
+                                    @else
+                                    @endif
+                                </div>
+                            </div>
+                        </form>
+                    @else
+                        Please connect battle.net account
+                    @endif
+                @elseif($menuFilter->menu_name == 'Battle.net account')
+
+                    <div style="margin-top: 60px" id="profileMenu">
+                        <form class="form" action="{{route('profile.post.menu', $user->id)}}" enctype="multipart/form-data">
+                            <ul class="profileMenu">
+                                <li class="profileMenuItem"><a href="#profile">User profile</a></li>
+                                <li class="profileMenuItem"><a href="#static">Create static</a></li>
+                                <li class="profileMenuItem"><a href="#battlenet">Battle.net account</a></li>
+                            </ul>
+                            {!! csrf_field() !!}
+                        </form>
+                    </div>
+                    <div>
+                        <script>
+                            var profilemenuitem = $('.profileMenuItem');
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
+                            profilemenuitem.on("click", function (event) {
+                                event.preventDefault();
+                                var text = this.innerText;
+                                $.ajax
+                                ({
+                                    type: 'POST',
+                                    url: '{{route('profile.post.menu', $user->id)}}',
+                                    data: {name: text},
+
+                                    success: function (data) {
+                                        $('.helperWrap').load(' .helperWrap')
+                                    }
+                                    , error: function (data) {
+                                        debugger;
+                                        alert("Error");
+                                    }
+                                });
+                            });
+                        </script>
+                    </div>
+
+                    <form target="_blank" method="get" action="{{route('battlenet.oauth' , \App\User::find(Auth::user()->id)->lang)}}">
+                        <div id="battlenet">
+                            <div class="region">
+                                @if(count($user->battlenet_token) > 0)
+                                    @if($check_token->exp >= time())
+                                        <label for="region" class="control-label">Change you'r region</label>
+                                    @else
+                                        <label for="region" class="control-label">You'r region</label>
+                                    @endif
+                                @else
+                                    <label for="region" class="control-label">Select you'r region</label>
+                                @endif
+                                <select id="timezone" name="region">
+                                    <option id="region" name="region" value='eu'> Europe</option>
+                                    <option id="region" name="region" value='us'> USA</option>
+                                    <option id="region" name="region" value='apac'> Asia-Pacific</option>
+                                    <option id="region" name="region" value='cn'> China</option>
+                                </select>
+                            </div>
+                            <div>
+                                <div class="buttons" style="padding: 20px 0;border-top: 1px solid #dad8de;width: 100%;text-align: center;">
+                                    <div class="form-group">
+                                        <button type="submit" style="width: 71px;height: 32px;" class="primary button">
+                                            <span style="line-height: 0px !important;" class="js-login-text">
+                                                @if(count($user->battlenet_token) > 0)
+                                                    @if($check_token->exp >= time())
+                                                        Change
+                                                    @else
+                                                        Bind
+                                                    @endif
+                                                @else
+                                                    Login
+                                                @endif
+                                            </span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <input type="hidden" name="_token" value="{{Session::token()}}">
-                </form>
-                <div>
-                    @if(count($user->battlenet_token) > 0)
-                        @if($check_token->exp >= time())
-                            hello {{$battlenetresponse->battletag}} with id {{$battlenetresponse->id}}
+                        <input type="hidden" name="_token" value="{{Session::token()}}">
+                    </form>
+                    <div>
+                        @if(count($user->battlenet_token) > 0)
+                            @if($check_token->exp >= time())
+                                hello {{$battlenetresponse->battletag}} with id {{$battlenetresponse->id}}
+                            @else
+                            @endif
                         @else
                         @endif
-                    @else
-                    @endif
+                    </div>
+                @elseif($menuFilter->menu_name == 'User profile')
+                    <div style="margin-top: 60px;" id="profileMenu">
+                        <form class="form" action="{{route('profile.post.menu', $user->id)}}" enctype="multipart/form-data">
+                            <ul class="profileMenu">
+                                <li class="profileMenuItem"><a href="#profile">User profile</a></li>
+                                <li class="profileMenuItem"><a href="#static">Create static</a></li>
+                                <li class="profileMenuItem"><a href="#battlenet">Battle.net account</a></li>
+                            </ul>
+                            {!! csrf_field() !!}
+                        </form>
+                    </div>
+                    <div>
+                        <script>
+                            var profilemenuitem = $('.profileMenuItem');
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
+                            profilemenuitem.on("click", function (event) {
+                                event.preventDefault();
+                                var text = this.innerText;
+                                $.ajax
+                                ({
+                                    type: 'POST',
+                                    url: '{{route('profile.post.menu', $user->id)}}',
+                                    data: {name: text},
+
+                                    success: function (data) {
+                                        $('.helperWrap').load(' .helperWrap')
+                                    }
+                                    , error: function (data) {
+                                        debugger;
+                                        alert("Error");
+                                    }
+                                });
+                            });
+                        </script>
+                    </div>
+                    <div style="margin-top: 60px">Profile huj228 sdesj standartnaja stranica. Stranica profila</div>
+                @endif
+            @else
+                <div style="margin-top: 60px" id="profileMenu">
+                    <form class="form" action="{{route('profile.post.menu', $user->id)}}" enctype="multipart/form-data">
+                        <ul class="profileMenu">
+                            <li class="profileMenuItem"><a href="#profile">User profile</a></li>
+                            <li class="profileMenuItem"><a href="#static">Create static</a></li>
+                            <li class="profileMenuItem"><a href="#battlenet">Battle.net account</a></li>
+                        </ul>
+                        {!! csrf_field() !!}
+                    </form>
                 </div>
+                <div>
+                    <script>
+                        var profilemenuitem = $('.profileMenuItem');
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        profilemenuitem.on("click", function (event) {
+                            event.preventDefault();
+                            var text = this.innerText;
+                            $.ajax
+                            ({
+                                type: 'POST',
+                                url: '{{route('profile.post.menu', $user->id)}}',
+                                data: {name: text},
+
+                                success: function (data) {
+                                    $('.helperWrap').load(' .helperWrap')
+                                }
+                                , error: function (data) {
+                                    debugger;
+                                    alert("Error");
+                                }
+                            });
+                        });
+                    </script>
+                </div>
+                <div style="margin-top: 60px">Profile huj228 sdesj standartnaja stranica. Stranica profila</div>
             @endif
         </div>
     </div>

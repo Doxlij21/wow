@@ -23,8 +23,7 @@
                                 $lang = \App\User::find(\Illuminate\Support\Facades\Auth::user()->id)->lang;
                             }
                         ?>
-
-                            <a href="{{ route('profile.index' , $lang )}}">{{Auth::user()->username}}</a>
+                        <a href="{{ route('profile.index' , $lang )}}">{{Auth::user()->username}}</a>
                     </div>
 
                     <a href="{{ route('logout') }}" style="display: block; float: left;" onclick="event.preventDefault();document.getElementById('logout-form').submit();">

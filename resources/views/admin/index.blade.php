@@ -14,17 +14,14 @@
 <div class="full-wrap">
     <div id="headerMover">
         <header>
-            //Вставлен из этого пути языковой блок
             @include('layouts.lang.lang')
         </header>
         <div id="content" class="indexNews">
             <div class="pageWidth">
                 <div class="pageContent">
-                    //То что может главный админ. Создание ролей, пермишенсов
                     @role('lead admin')
                         <div id="admin">
                             <div class="addRole">
-                                //post route
                                 <form class="form" action="{{ route ('admin.post.role') }}" enctype="multipart/form-data">
                                     <label for="role">add role</label>
                                     <input type="text" name="role" id="role">
@@ -33,18 +30,15 @@
                                             submit
                                         </span>
                                     </button>
-                                    //токен безопасности
                                     {!! csrf_field() !!}
                                 </form>
                             </div>
                             <div class="allRoles">
-                                // public/js/admin/showrp.js
                                 <div class="showRoles" onclick="showRoles()">
                                     Show all available roles
                                 </div>
                                 <div style="display: none" class="availableRoles">
                                     <ul>
-                                        //php можете заинклюдить в отдельюную функцию, что бы код легче читался. Так же это все роли и их цвета, можете что то еще придумать
                                         @foreach($roles as $role)
                                             <li>
                                                 @if($role->name == 'lead admin')
@@ -66,13 +60,11 @@
                                         @endforeach
                                     </ul>
                                 </div>
-                                // public/js/admin/showrp.js
                                 <div style="display: none" class="hideRoles" onclick="hideRoles()">
                                     Hide roles
                                 </div>
                             </div>
                             <div class="addPermission">
-                                // post route
                                 <form class="form-vertical" role="form" action="{{ route ('admin.post.permission') }}" method="POST" enctype="multipart/form-data">
                                     <label for="permission">add permission</label>
                                     <input type="text" name="permission">
@@ -81,18 +73,15 @@
                                             submit
                                         </span>
                                     </button>
-                                    // Токен безопасности
                                     {!! csrf_field() !!}
                                 </form>
                             </div>
                             <div class="allPermissions">
-                                // public/js/admin/showrp.js
                                 <div class="showPermissions" onclick="showPermissions()">
                                     Show all available permissions
                                 </div>
                                 <div style="display: none" class="availablePermissions">
                                     <ul>
-                                        // Все возможные пермишенсы
                                         @foreach($permissions as $permission)
                                              <li>
                                                 {{$permission->name}}
@@ -100,14 +89,11 @@
                                         @endforeach
                                     </ul>
                                 </div>
-                                // public/js/admin/showrp.js
                                 <div style="display: none" class="hidePermissions" onclick="hidePermissions()">
                                     Hide permissions
                                 </div>
                             </div>
-                            //Конец роли лид админа
                             @endrole
-                            // Начало возможностей лид админа,админа. Назначение ролей и пермишенсов
                             @role(['lead admin','admin'])
                             <div>
                                 <dl class="ctrlUnit">
