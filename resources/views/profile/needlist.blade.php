@@ -42,9 +42,9 @@
                 $switcheditembracers = \App\NeedlistSwitcher::where('user_char',$_GET['char'])->where('user_item_inventory_type','9')->where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->get()->last();
                 $switcheditemgloves = \App\NeedlistSwitcher::where('user_char',$_GET['char'])->where('user_item_inventory_type','10')->where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->get()->last();
 
-                $progressionNH = \App\CharProgression::where('user_char',$_GET['char'])->where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->where('user_raid','The Nighthold');
-                $progressionTOS = \App\CharProgression::where('user_char',$_GET['char'])->where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->where('user_raid','Tomb of Sargeras');
-                $progressionATBT = \App\CharProgression::where('user_char',$_GET['char'])->where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->where('user_raid','Antorus the burning throne');
+                $progressionNH = \App\CharProgression::where('user_char',$_GET['char'])->where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->where('user_raid','The Nighthold')->first();
+                $progressionTOS = \App\CharProgression::where('user_char',$_GET['char'])->where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->where('user_raid','Tomb of Sargeras')->first();
+                $progressionATBT = \App\CharProgression::where('user_char',$_GET['char'])->where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->where('user_raid','Antorus the burning throne')->first();
             } else {}
         }
     ?>
@@ -270,70 +270,196 @@
                 @foreach($charsimcitem as $simcitem)
                     @if($_GET['raid'] == $simcitem->simc_raid)
 
-                        {{--@if($simcitem->simc_raid == 'The Nighthold')--}}
-                            {{--@if(count($progressionNH)>0)--}}
-                                {{--@if($progressionNH->user_mythic > 0 || $progressionNH->char_ilvl > '930')--}}
-                                {{--@elseif($progressionNH->user_heroic > 0)--}}
-                                {{--@elseif($progressionNH->user_normal > 0)--}}
-                                {{--@else--}}
-                                {{--@endif--}}
-                            {{--@else--}}
-                            {{--@endif--}}
-                        {{--@elseif($simcitem->simc_raid == 'Tomb of Sargeras')--}}
-                            {{--@if(count($progressionTOS)>0)--}}
-                                {{--@if($progressionTOS->user_mythic > 0 || $progressionTOS->char_ilvl > '955')--}}
-                                {{--@elseif($progressionTOS->user_heroic > 0)--}}
-                                {{--@elseif($progressionTOS->user_normal > 0)--}}
-                                {{--@else--}}
-                                {{--@endif--}}
-                            {{--@else--}}
-                            {{--@endif--}}
-                        {{--@elseif($simcitem->simc_raid == 'Antorus the burning throne')--}}
-                            {{--@if(count($progressionATBT)>0)--}}
-                                {{--@if($progressionATBT->user_mythic > 0)--}}
-                                {{--@elseif($progressionATBT->user_heroic > 0)--}}
-                                {{--@elseif($progressionATBT->user_normal > 0)--}}
-                                {{--@else--}}
-                                {{--@endif--}}
-                            {{--@else--}}
-                            {{--@endif--}}
-                        {{--@else--}}
-                        {{--@endif--}}
-
-                        @if($simcitem->simc_mastery == null || $simcitem->simc_haste == null || $simcitem->simc_crit == null || $simcitem->simc_dps == null || $simcitem->simc_dps2 == null)
-                            This item is pending for stat scaling: <span data-tooltip-href="http://www.wowdb.com/items/{{$simcitem->simc_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$simcitem->simc_item_icon}}.jpg">{{$simcitem->simc_item_name}}</span>.
+                        @if($simcitem->simc_raid == 'The Nighthold')
+                            @if(count($progressionNH)>0)
+                                @if($progressionNH->user_mythic > 0 || $progressionNH->char_ilvl > '930')
+                                    @if($simcitem->simc_raid_difficulty == 'Mythic')
+                                        <span data-tooltip-href="http://www.wowdb.com/items/{{$simcitem->simc_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$simcitem->simc_item_icon}}.jpg">{{$simcitem->simc_item_name}}</span>.
+                                        this item bust you:
+                                        <?php
+                                        $a = $simcitem->simc_dps / 100;
+                                        $b = $simcitem->simc_dps2 - $simcitem->simc_dps;
+                                        $difres = $b/$a;
+                                        $difdps = $simcitem->simc_dps - $simcitem->simc_dps2;
+                                        ?>
+                                        @if($difres > 0)
+                                            <span style="background: green">{{substr($difres, 0, 5)}}%</span>.
+                                            <div>This item will strengthen you: {{$difdps}} dps</div>.
+                                        @else
+                                            <span style="background: red">{{substr($difres, 0, 5)}}%</span>.
+                                            <div>This item will weaken you: {{$difdps}} dps</div>.
+                                        @endif
+                                    @else
+                                    @endif
+                                @elseif($progressionNH->user_heroic > 0)
+                                    @if($simcitem->simc_raid_difficulty == 'Heroic')
+                                        <span data-tooltip-href="http://www.wowdb.com/items/{{$simcitem->simc_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$simcitem->simc_item_icon}}.jpg">{{$simcitem->simc_item_name}}</span>.
+                                        this item bust you:
+                                        <?php
+                                        $a = $simcitem->simc_dps / 100;
+                                        $b = $simcitem->simc_dps2 - $simcitem->simc_dps;
+                                        $difres = $b/$a;
+                                        $difdps = $simcitem->simc_dps - $simcitem->simc_dps2;
+                                        ?>
+                                        @if($difres > 0)
+                                            <span style="background: green">{{substr($difres, 0, 5)}}%</span>.
+                                            <div>This item will strengthen you: {{$difdps}} dps</div>.
+                                        @else
+                                            <span style="background: red">{{substr($difres, 0, 5)}}%</span>.
+                                            <div>This item will weaken you: {{$difdps}} dps</div>.
+                                        @endif
+                                    @else
+                                    @endif
+                                @elseif($progressionNH->user_normal > 0)
+                                    @if($simcitem->simc_raid_difficulty == 'Normal')
+                                        <span data-tooltip-href="http://www.wowdb.com/items/{{$simcitem->simc_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$simcitem->simc_item_icon}}.jpg">{{$simcitem->simc_item_name}}</span>.
+                                        this item bust you:
+                                        <?php
+                                        $a = $simcitem->simc_dps / 100;
+                                        $b = $simcitem->simc_dps2 - $simcitem->simc_dps;
+                                        $difres = $b/$a;
+                                        $difdps = $simcitem->simc_dps - $simcitem->simc_dps2;
+                                        ?>
+                                        @if($difres > 0)
+                                            <span style="background: green">{{substr($difres, 0, 5)}}%</span>.
+                                            <div>This item will strengthen you: {{$difdps}} dps</div>.
+                                        @else
+                                            <span style="background: red">{{substr($difres, 0, 5)}}%</span>.
+                                            <div>This item will weaken you: {{$difdps}} dps</div>.
+                                        @endif
+                                    @else
+                                    @endif
+                                @else
+                                @endif
+                            @else
+                            @endif
+                        @elseif($simcitem->simc_raid == 'Tomb of Sargeras')
+                            @if(count($progressionTOS)>0)
+                                @if($progressionTOS->user_mythic > 0 || $progressionTOS->char_ilvl > '955')
+                                    @if($simcitem->simc_raid_difficulty == 'Mythic')
+                                        <span data-tooltip-href="http://www.wowdb.com/items/{{$simcitem->simc_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$simcitem->simc_item_icon}}.jpg">{{$simcitem->simc_item_name}}</span>.
+                                        this item bust you:
+                                        <?php
+                                        $a = $simcitem->simc_dps / 100;
+                                        $b = $simcitem->simc_dps2 - $simcitem->simc_dps;
+                                        $difres = $b/$a;
+                                        $difdps = $simcitem->simc_dps - $simcitem->simc_dps2;
+                                        ?>
+                                        @if($difres > 0)
+                                            <span style="background: green">{{substr($difres, 0, 5)}}%</span>.
+                                            <div>This item will strengthen you: {{$difdps}} dps</div>.
+                                        @else
+                                            <span style="background: red">{{substr($difres, 0, 5)}}%</span>.
+                                            <div>This item will weaken you: {{$difdps}} dps</div>.
+                                        @endif
+                                    @else
+                                    @endif
+                                @elseif($progressionTOS->user_heroic > 0)
+                                    @if($simcitem->simc_raid_difficulty == 'Heroic')
+                                        <span data-tooltip-href="http://www.wowdb.com/items/{{$simcitem->simc_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$simcitem->simc_item_icon}}.jpg">{{$simcitem->simc_item_name}}</span>.
+                                        this item bust you:
+                                        <?php
+                                        $a = $simcitem->simc_dps / 100;
+                                        $b = $simcitem->simc_dps2 - $simcitem->simc_dps;
+                                        $difres = $b/$a;
+                                        $difdps = $simcitem->simc_dps - $simcitem->simc_dps2;
+                                        ?>
+                                        @if($difres > 0)
+                                            <span style="background: green">{{substr($difres, 0, 5)}}%</span>.
+                                            <div>This item will strengthen you: {{$difdps}} dps</div>.
+                                        @else
+                                            <span style="background: red">{{substr($difres, 0, 5)}}%</span>.
+                                            <div>This item will weaken you: {{$difdps}} dps</div>.
+                                        @endif
+                                    @else
+                                    @endif
+                                @elseif($progressionTOS->user_normal > 0)
+                                    @if($simcitem->simc_raid_difficulty == 'Normal')
+                                        <span data-tooltip-href="http://www.wowdb.com/items/{{$simcitem->simc_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$simcitem->simc_item_icon}}.jpg">{{$simcitem->simc_item_name}}</span>.
+                                        this item bust you:
+                                        <?php
+                                        $a = $simcitem->simc_dps / 100;
+                                        $b = $simcitem->simc_dps2 - $simcitem->simc_dps;
+                                        $difres = $b/$a;
+                                        $difdps = $simcitem->simc_dps - $simcitem->simc_dps2;
+                                        ?>
+                                        @if($difres > 0)
+                                            <span style="background: green">{{substr($difres, 0, 5)}}%</span>.
+                                            <div>This item will strengthen you: {{$difdps}} dps</div>.
+                                        @else
+                                            <span style="background: red">{{substr($difres, 0, 5)}}%</span>.
+                                            <div>This item will weaken you: {{$difdps}} dps</div>.
+                                        @endif
+                                    @else
+                                    @endif
+                                @else
+                                @endif
+                            @else
+                            @endif
+                        @elseif($simcitem->simc_raid == 'Antorus the burning throne')
+                            @if(count($progressionATBT)>0)
+                                @if($progressionATBT->user_mythic > 0)
+                                    @if($simcitem->simc_raid_difficulty == 'Mythic')
+                                        <span data-tooltip-href="http://www.wowdb.com/items/{{$simcitem->simc_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$simcitem->simc_item_icon}}.jpg">{{$simcitem->simc_item_name}}</span>.
+                                        this item bust you:
+                                        <?php
+                                        $a = $simcitem->simc_dps / 100;
+                                        $b = $simcitem->simc_dps2 - $simcitem->simc_dps;
+                                        $difres = $b/$a;
+                                        $difdps = $simcitem->simc_dps - $simcitem->simc_dps2;
+                                        ?>
+                                        @if($difres > 0)
+                                            <span style="background: green">{{substr($difres, 0, 5)}}%</span>.
+                                            <div>This item will strengthen you: {{$difdps}} dps</div>.
+                                        @else
+                                            <span style="background: red">{{substr($difres, 0, 5)}}%</span>.
+                                            <div>This item will weaken you: {{$difdps}} dps</div>.
+                                        @endif
+                                    @else
+                                    @endif
+                                @elseif($progressionATBT->user_heroic > 0)
+                                    @if($simcitem->simc_raid_difficulty == 'Heroic')
+                                        <span data-tooltip-href="http://www.wowdb.com/items/{{$simcitem->simc_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$simcitem->simc_item_icon}}.jpg">{{$simcitem->simc_item_name}}</span>.
+                                        this item bust you:
+                                        <?php
+                                        $a = $simcitem->simc_dps / 100;
+                                        $b = $simcitem->simc_dps2 - $simcitem->simc_dps;
+                                        $difres = $b/$a;
+                                        $difdps = $simcitem->simc_dps - $simcitem->simc_dps2;
+                                        ?>
+                                        @if($difres > 0)
+                                            <span style="background: green">{{substr($difres, 0, 5)}}%</span>.
+                                            <div>This item will strengthen you: {{$difdps}} dps</div>.
+                                        @else
+                                            <span style="background: red">{{substr($difres, 0, 5)}}%</span>.
+                                            <div>This item will weaken you: {{$difdps}} dps</div>.
+                                        @endif
+                                    @else
+                                    @endif
+                                @elseif($progressionATBT->user_normal > 0)
+                                    @if($simcitem->simc_raid_difficulty == 'Normal')
+                                        <span data-tooltip-href="http://www.wowdb.com/items/{{$simcitem->simc_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$simcitem->simc_item_icon}}.jpg">{{$simcitem->simc_item_name}}</span>.
+                                        this item bust you:
+                                        <?php
+                                        $a = $simcitem->simc_dps / 100;
+                                        $b = $simcitem->simc_dps2 - $simcitem->simc_dps;
+                                        $difres = $b/$a;
+                                        $difdps = $simcitem->simc_dps - $simcitem->simc_dps2;
+                                        ?>
+                                        @if($difres > 0)
+                                            <span style="background: green">{{substr($difres, 0, 5)}}%</span>.
+                                            <div>This item will strengthen you: {{$difdps}} dps</div>.
+                                        @else
+                                            <span style="background: red">{{substr($difres, 0, 5)}}%</span>.
+                                            <div>This item will weaken you: {{$difdps}} dps</div>.
+                                        @endif
+                                    @else
+                                    @endif
+                                @else
+                                @endif
+                            @else
+                            @endif
                         @else
-                            @if(count($simcitem->simc_int)>0)
-                                Intellect: {{$simcitem->simc_int}}.
-                            @elseif(count($simcitem->simc_agi)>0)
-                                Agility: {{$simcitem->simc_agi}}.
-                            @elseif(count($simcitem->simc_str)>0)
-                                Strength: {{$simcitem->simc_str}}.
-                            @endif
-                            Mastery: {{$simcitem->simc_mastery}}.
-                            Haste: {{$simcitem->simc_haste}}.
-                            Crit: {{$simcitem->simc_crit}}.
-                            Versability:
-                            @if(count($simcitem->simc_vers)>0)
-                                {{$simcitem->simc_vers}}.
-                            @else
-                                you have zero versability.
-                            @endif
-                            for this item: <span data-tooltip-href="http://www.wowdb.com/items/{{$simcitem->simc_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$simcitem->simc_item_icon}}.jpg">{{$simcitem->simc_item_name}}</span>.
-                            this item bust you:
-                            <?php
-                            $a = $simcitem->simc_dps / 100;
-                            $b = $simcitem->simc_dps2 - $simcitem->simc_dps;
-                            $difres = $b/$a;
-                            $difdps = $simcitem->simc_dps - $simcitem->simc_dps2;
-                            ?>
-                            @if($difres > 0)
-                                <span style="background: green">{{substr($difres, 0, 5)}}%</span>.
-                                <div>This item will strengthen you: {{$difdps}} dps</div>.
-                            @else
-                                <span style="background: red">{{substr($difres, 0, 5)}}%</span>.
-                                <div>This item will weaken you: {{$difdps}} dps</div>.
-                            @endif
                         @endif
                     @else
                     @endif
