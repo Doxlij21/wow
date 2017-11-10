@@ -32,9 +32,16 @@ $(document).ready(function() {
         $('#statsform').submit();
     });
 
+    $('#selecttemplate').on('change',function () {
+        var char = $("#selectCharacter")[0].value.replace(/ /g,"%20");
+        var tempname = $(this)[0].value;
+        $("#charinveq").load('?char=' + char + '&tempname=' + tempname  + ' #charinveq', function () {
+            $.getScript('/js/profile/needlist/dragandsort.js')
+        });
+    });
+
     $('#selectraid').on('change', function() {
      var raid = $("#selectraid option:selected" ).text().replace(/ /g,"%20");
-     var char = $("#selectCharacter")[0].value.replace(/ /g,"%20");
 
         $("#raiditems").load('?raid=' + raid + '&char=' + char + ' #raiditems', function () {
             $.getScript('/js/profile/needlist/dragandsort.js')

@@ -34,8 +34,10 @@
                 $switcheditemhead = \App\NeedlistSwitcher::where('user_char',$_GET['char'])->where('user_item_inventory_type','1')->where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->get()->last();
                 $switcheditemneck = \App\NeedlistSwitcher::where('user_char',$_GET['char'])->where('user_item_inventory_type','2')->where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->get()->last();
                 $switcheditemshoulder = \App\NeedlistSwitcher::where('user_char',$_GET['char'])->where('user_item_inventory_type','3')->where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->get()->last();
-                $switcheditemback = \App\NeedlistSwitcher::where('user_char',$_GET['char'])->where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->where('user_item_inventory_type','4')->orWhere('user_item_inventory_type','16')->get()->last();
-                $switcheditemchest = \App\NeedlistSwitcher::where('user_char',$_GET['char'])->where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->where('user_item_inventory_type','5')->orWhere('user_item_inventory_type','20')->get()->last();
+                $capeids = ['4','16'];
+                $switcheditemback = \App\NeedlistSwitcher::where('user_char',$_GET['char'])->where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->whereIn('user_item_inventory_type',$capeids)->get()->last();
+                $chestids = ['5','20'];
+                $switcheditemchest = \App\NeedlistSwitcher::where('user_char',$_GET['char'])->where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->whereIn('user_item_inventory_type',$chestids)->get()->last();
                 $switcheditembelt = \App\NeedlistSwitcher::where('user_char',$_GET['char'])->where('user_item_inventory_type','6')->where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->get()->last();
                 $switcheditempants = \App\NeedlistSwitcher::where('user_char',$_GET['char'])->where('user_item_inventory_type','7')->where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->get()->last();
                 $switcheditemfeet = \App\NeedlistSwitcher::where('user_char',$_GET['char'])->where('user_item_inventory_type','8')->where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->get()->last();
@@ -45,6 +47,8 @@
                 $progressionNH = \App\CharProgression::where('user_char',$_GET['char'])->where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->where('user_raid','The Nighthold')->first();
                 $progressionTOS = \App\CharProgression::where('user_char',$_GET['char'])->where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->where('user_raid','Tomb of Sargeras')->first();
                 $progressionATBT = \App\CharProgression::where('user_char',$_GET['char'])->where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->where('user_raid','Antorus the burning throne')->first();
+
+                $raidtemplates = \App\CharRaidTemplates::where('user_char',$_GET['char'])->get();
             } else {}
         }
     ?>
@@ -98,72 +102,211 @@
     </form>
 @endif
 <div id="charinveq" style="float: right;width: 500px;">
+    <?php
+        if (count(request()->tempname))
+        {
+            $tempname = \App\CharRaidTemplates::where('id',request()->tempname)->firstOrFail();
+            $explodedtempname[] = [explode(',',$tempname->user_item_inventory_type),explode(',',$tempname->user_item_id),explode(',',$tempname->user_item_icon)];
+        } else {}
+    ?>
     <div style="float: left">
         <div id="left-items">
             <div id="left-item-head">
-                @if(count($switcheditemhead)>0)
-                    @if($switcheditemhead->needlist_switcher == '1')
-                        <span style="background: green;" id="1" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditemhead->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditemhead->user_item_icon}}.jpg"></span>
+                @if(request()->tempname)
+                    @foreach($explodedtempname[0][0] as $key => $tempn)
+                        @if($tempn == '1')
+                            <span style="background: blue;" id="1" data-tooltip-href="http://www.wowdb.com/items/{{$explodedtempname[0][1][$key]}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$explodedtempname[0][2][$key]}}.jpg"></span>
+                        @else
+                            <?php $search_key = array_search('1', $explodedtempname[0][0]); ?>
+                            @if($key == $search_key)
+                                @if(count($switcheditemhead)>0)
+                                    @if($switcheditemhead->needlist_switcher == '1')
+                                        <span style="background: green;" id="1" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditemhead->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditemhead->user_item_icon}}.jpg"></span>
+                                    @else
+                                        <span style="background: red;" id="1" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->head_id}}?itemLevel={{$charequip->head_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->head_icon}}.jpg"></span>
+                                    @endif
+                                @else
+                                    <span style="background: red;" id="1" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->head_id}}?itemLevel={{$charequip->head_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->head_icon}}.jpg"></span>
+                                @endif
+                            @else
+                            @endif
+                        @endif
+                    @endforeach
+                @else
+                    @if(count($switcheditemhead)>0)
+                        @if($switcheditemhead->needlist_switcher == '1')
+                            <span style="background: green;" id="1" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditemhead->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditemhead->user_item_icon}}.jpg"></span>
+                        @else
+                            <span style="background: red;" id="1" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->head_id}}?itemLevel={{$charequip->head_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->head_icon}}.jpg"></span>
+                        @endif
                     @else
                         <span style="background: red;" id="1" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->head_id}}?itemLevel={{$charequip->head_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->head_icon}}.jpg"></span>
                     @endif
-                @else
-                    <span style="background: red;" id="1" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->head_id}}?itemLevel={{$charequip->head_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->head_icon}}.jpg"></span>
                 @endif
             </div>
             <div id="left-item-neck">
-                @if(count($switcheditemneck)>0)
-                    @if($switcheditemneck->needlist_switcher == '1')
-                        <span style="background: green;" id="2" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditemneck->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditemneck->user_item_icon}}.jpg"></span>
+                @if(request()->tempname)
+                    @foreach($explodedtempname[0][0] as $key => $tempn)
+                        @if($tempn == '2')
+                            <span style="background: blue;" id="2" data-tooltip-href="http://www.wowdb.com/items/{{$explodedtempname[0][1][$key]}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$explodedtempname[0][2][$key]}}.jpg"></span>
+                        @else
+                            <?php $search_key = array_search('2', $explodedtempname[0][0]); ?>
+                            @if($key == $search_key)
+                                @if(count($switcheditemneck)>0)
+                                    @if($switcheditemneck->needlist_switcher == '1')
+                                        <span style="background: green;" id="2" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditemneck->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditemneck->user_item_icon}}.jpg"></span>
+                                    @else
+                                        <span style="background: red;" id="2" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->neck_id}}?itemLevel={{$charequip->neck_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->neck_icon}}.jpg"></span>
+                                    @endif
+                                @else
+                                        <span style="background: red;" id="2" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->neck_id}}?itemLevel={{$charequip->neck_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->neck_icon}}.jpg"></span>
+                                @endif
+                            @else
+                            @endif
+                        @endif
+                    @endforeach
+                @else
+                    @if(count($switcheditemneck)>0)
+                        @if($switcheditemneck->needlist_switcher == '1')
+                            <span style="background: green;" id="2" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditemneck->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditemneck->user_item_icon}}.jpg"></span>
+                        @else
+                            <span style="background: red;" id="2" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->neck_id}}?itemLevel={{$charequip->neck_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->neck_icon}}.jpg"></span>
+                        @endif
                     @else
                         <span style="background: red;" id="2" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->neck_id}}?itemLevel={{$charequip->neck_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->neck_icon}}.jpg"></span>
                     @endif
-                @else
-                    <span style="background: red;" id="2" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->neck_id}}?itemLevel={{$charequip->neck_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->neck_icon}}.jpg"></span>
                 @endif
             </div>
             <div id="left-item-shoulders">
-                @if(count($switcheditemshoulder)>0)
-                    @if($switcheditemshoulder->needlist_switcher == '1')
-                        <span style="background: green;" id="3" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditemshoulder->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditemshoulder->user_item_icon}}.jpg"></span>
+                @if(request()->tempname)
+                    @foreach($explodedtempname[0][0] as $key => $tempn)
+                        @if($tempn == '3')
+                            <span style="background: blue;" id="3" data-tooltip-href="http://www.wowdb.com/items/{{$explodedtempname[0][1][$key]}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$explodedtempname[0][2][$key]}}.jpg"></span>
+                        @else
+                            <?php $search_key = array_search('3', $explodedtempname[0][0]); ?>
+                            @if($key == $search_key)
+                                @if(count($switcheditemshoulder)>0)
+                                    @if($switcheditemshoulder->needlist_switcher == '1')
+                                        <span style="background: green;" id="3" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditemshoulder->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditemshoulder->user_item_icon}}.jpg"></span>
+                                    @else
+                                        <span style="background: red;" id="3" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->shoulder_id}}?itemLevel={{$charequip->shoulder_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->shoulder_icon}}.jpg"></span>
+                                    @endif
+                                @else
+                                    <span style="background: red;" id="3" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->shoulder_id}}?itemLevel={{$charequip->shoulder_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->shoulder_icon}}.jpg"></span>
+                                @endif
+                            @else
+                            @endif
+                        @endif
+                    @endforeach
+                @else
+                    @if(count($switcheditemshoulder)>0)
+                        @if($switcheditemshoulder->needlist_switcher == '1')
+                            <span style="background: green;" id="3" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditemshoulder->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditemshoulder->user_item_icon}}.jpg"></span>
+                        @else
+                            <span style="background: red;" id="3" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->shoulder_id}}?itemLevel={{$charequip->shoulder_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->shoulder_icon}}.jpg"></span>
+                        @endif
                     @else
                         <span style="background: red;" id="3" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->shoulder_id}}?itemLevel={{$charequip->shoulder_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->shoulder_icon}}.jpg"></span>
                     @endif
-                @else
-                    <span style="background: red;" id="3" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->shoulder_id}}?itemLevel={{$charequip->shoulder_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->shoulder_icon}}.jpg"></span>
                 @endif
             </div>
             <div id="left-item-cloak">
-                @if(count($switcheditemback)>0)
-                    @if($switcheditemback->needlist_switcher == '1')
-                        <span style="background: green" id="4" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditemback->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditemback->user_item_icon}}.jpg"></span>
+                @if(request()->tempname)
+                    @foreach($explodedtempname[0][0] as $key => $tempn)
+                        @if($tempn == '4'||$tempn =='16')
+                            <span style="background: blue;" id="4" data-tooltip-href="http://www.wowdb.com/items/{{$explodedtempname[0][1][$key]}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$explodedtempname[0][2][$key]}}.jpg"></span>
+                        @else
+                            <?php $search_key = array_search('4'||'16', $explodedtempname[0][0]); ?>
+                            @if($key == $search_key)
+                                @if(count($switcheditemback)>0)
+                                    @if($switcheditemback->needlist_switcher == '1')
+                                        <span style="background: green" id="4" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditemback->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditemback->user_item_icon}}.jpg"></span>
+                                    @else
+                                        <span style="background: red;" id="4" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->back_id}}?itemLevel={{$charequip->back_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->back_icon}}.jpg"></span>
+                                    @endif
+                                @else
+                                        <span style="background: red;" id="4" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->back_id}}?itemLevel={{$charequip->back_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->back_icon}}.jpg"></span>
+                                @endif
+                            @else
+                            @endif
+                        @endif
+                    @endforeach
+                @else
+                    @if(count($switcheditemback)>0)
+                        @if($switcheditemback->needlist_switcher == '1')
+                            <span style="background: green" id="4" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditemback->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditemback->user_item_icon}}.jpg"></span>
+                        @else
+                            <span style="background: red;" id="4" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->back_id}}?itemLevel={{$charequip->back_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->back_icon}}.jpg"></span>
+                        @endif
                     @else
                         <span style="background: red;" id="4" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->back_id}}?itemLevel={{$charequip->back_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->back_icon}}.jpg"></span>
                     @endif
-                @else
-                    <span style="background: red;" id="4" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->back_id}}?itemLevel={{$charequip->back_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->back_icon}}.jpg"></span>
                 @endif
             </div>
             <div id="left-item-chest">
-                @if(count($switcheditemchest)>0)
-                    @if($switcheditemchest->needlist_switcher == '1')
-                        <span style="background: green" id="5" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditemchest->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditemchest->user_item_icon}}.jpg"></span>
+                @if(request()->tempname)
+                    @foreach($explodedtempname[0][0] as $key => $tempn)
+                        @if($tempn == '5'||$tempn == '20')
+                            <span style="background: blue;" id="5" data-tooltip-href="http://www.wowdb.com/items/{{$explodedtempname[0][1][$key]}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$explodedtempname[0][2][$key]}}.jpg"></span>
+                        @else
+                            <?php $search_key = array_search('5'||'20', $explodedtempname[0][0]); ?>
+                            @if($key == $search_key)
+                                @if(count($switcheditemchest)>0)
+                                    @if($switcheditemchest->needlist_switcher == '1')
+                                        <span style="background: green" id="5" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditemchest->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditemchest->user_item_icon}}.jpg"></span>
+                                    @else
+                                        <span style="background: red;" id="5" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->chest_id}}?itemLevel={{$charequip->chest_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->chest_icon}}.jpg"></span>
+                                    @endif
+                                @else
+                                        <span style="background: red;" id="5" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->chest_id}}?itemLevel={{$charequip->chest_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->chest_icon}}.jpg"></span>
+                                @endif
+                            @else
+                            @endif
+                        @endif
+                    @endforeach
+                @else
+                    @if(count($switcheditemchest)>0)
+                        @if($switcheditemchest->needlist_switcher == '1')
+                            <span style="background: green" id="5" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditemchest->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditemchest->user_item_icon}}.jpg"></span>
+                        @else
+                            <span style="background: red;" id="5" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->chest_id}}?itemLevel={{$charequip->chest_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->chest_icon}}.jpg"></span>
+                        @endif
                     @else
                         <span style="background: red;" id="5" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->chest_id}}?itemLevel={{$charequip->chest_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->chest_icon}}.jpg"></span>
                     @endif
-                @else
-                    <span style="background: red;" id="5" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->chest_id}}?itemLevel={{$charequip->chest_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->chest_icon}}.jpg"></span>
                 @endif
             </div>
             <div id="left-item-wrists">
-                @if(count($switcheditembracers)>0)
-                    @if($switcheditembracers->needlist_switcher == '1')
-                        <span style="background: green" id="9" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditembracers->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditembracers->user_item_icon}}.jpg"></span>
+                @if(request()->tempname)
+                    @foreach($explodedtempname[0][0] as $key => $tempn)
+                        @if($tempn == '9')
+                            <span style="background: blue;" id="9" data-tooltip-href="http://www.wowdb.com/items/{{$explodedtempname[0][1][$key]}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$explodedtempname[0][2][$key]}}.jpg"></span>
+                        @else
+                            <?php $search_key = array_search('9', $explodedtempname[0][0]); ?>
+                            @if($key == $search_key)
+                                @if(count($switcheditembracers)>0)
+                                    @if($switcheditembracers->needlist_switcher == '1')
+                                        <span style="background: green" id="9" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditembracers->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditembracers->user_item_icon}}.jpg"></span>
+                                    @else
+                                        <span style="background: red;" id="9" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->wrist_id}}?itemLevel={{$charequip->wrist_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->wrist_icon}}.jpg"></span>
+                                    @endif
+                                @else
+                                        <span style="background: red;" id="9" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->wrist_id}}?itemLevel={{$charequip->wrist_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->wrist_icon}}.jpg"></span>
+                                @endif
+                            @else
+                            @endif
+                        @endif
+                    @endforeach
+                @else
+                    @if(count($switcheditembracers)>0)
+                        @if($switcheditembracers->needlist_switcher == '1')
+                            <span style="background: green" id="9" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditembracers->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditembracers->user_item_icon}}.jpg"></span>
+                        @else
+                            <span style="background: red;" id="9" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->wrist_id}}?itemLevel={{$charequip->wrist_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->wrist_icon}}.jpg"></span>
+                        @endif
                     @else
                         <span style="background: red;" id="9" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->wrist_id}}?itemLevel={{$charequip->wrist_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->wrist_icon}}.jpg"></span>
                     @endif
-                @else
-                    <span style="background: red;" id="9" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->wrist_id}}?itemLevel={{$charequip->wrist_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->wrist_icon}}.jpg"></span>
                 @endif
             </div>
         </div>
@@ -171,47 +314,135 @@
     <div style="float: right">
         <div id="right-items">
             <div id="right-item-hands">
-                @if(count($switcheditemgloves)>0)
-                    @if($switcheditemgloves->needlist_switcher == '1')
-                        <span style="background: green" id="10" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditemgloves->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditemgloves->user_item_icon}}.jpg"></span>
+                @if(request()->tempname)
+                    @foreach($explodedtempname[0][0] as $key => $tempn)
+                        @if($tempn == '10')
+                            <span style="background: blue;" id="10" data-tooltip-href="http://www.wowdb.com/items/{{$explodedtempname[0][1][$key]}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$explodedtempname[0][2][$key]}}.jpg"></span>
+                        @else
+                            <?php $search_key = array_search('10', $explodedtempname[0][0]); ?>
+                            @if($key == $search_key)
+                                @if(count($switcheditemgloves)>0)
+                                    @if($switcheditemgloves->needlist_switcher == '1')
+                                        <span style="background: green" id="10" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditemgloves->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditemgloves->user_item_icon}}.jpg"></span>
+                                    @else
+                                        <span style="background: red;" id="10" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->hands_id}}?itemLevel={{$charequip->hands_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->hands_icon}}.jpg"></span>
+                                    @endif
+                                @else
+                                        <span style="background: red;" id="10" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->hands_id}}?itemLevel={{$charequip->hands_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->hands_icon}}.jpg"></span>
+                                @endif
+                            @else
+                            @endif
+                        @endif
+                    @endforeach
+                @else
+                    @if(count($switcheditemgloves)>0)
+                        @if($switcheditemgloves->needlist_switcher == '1')
+                            <span style="background: green" id="10" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditemgloves->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditemgloves->user_item_icon}}.jpg"></span>
+                        @else
+                            <span style="background: red;" id="10" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->hands_id}}?itemLevel={{$charequip->hands_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->hands_icon}}.jpg"></span>
+                        @endif
                     @else
                         <span style="background: red;" id="10" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->hands_id}}?itemLevel={{$charequip->hands_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->hands_icon}}.jpg"></span>
                     @endif
-                @else
-                    <span style="background: red;" id="10" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->hands_id}}?itemLevel={{$charequip->hands_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->hands_icon}}.jpg"></span>
                 @endif
             </div>
             <div id="right-item-waist">
-                @if(count($switcheditembelt)>0)
-                    @if($switcheditembelt->needlist_switcher == '1')
-                        <span style="background: green" id="6" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditembelt->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditembelt->user_item_icon}}.jpg"></span>
+                @if(request()->tempname)
+                    @foreach($explodedtempname[0][0] as $key => $tempn)
+                        @if($tempn == '6')
+                            <span style="background: blue;" id="6" data-tooltip-href="http://www.wowdb.com/items/{{$explodedtempname[0][1][$key]}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$explodedtempname[0][2][$key]}}.jpg"></span>
+                        @else
+                            <?php $search_key = array_search('6', $explodedtempname[0][0]); ?>
+                            @if($key == $search_key)
+                                @if(count($switcheditembelt)>0)
+                                    @if($switcheditembelt->needlist_switcher == '1')
+                                        <span style="background: green" id="6" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditembelt->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditembelt->user_item_icon}}.jpg"></span>
+                                    @else
+                                        <span style="background: red;" id="6" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->waist_id}}?itemLevel={{$charequip->waist_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->waist_icon}}.jpg"></span>
+                                    @endif
+                                @else
+                                        <span style="background: red;" id="6" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->waist_id}}?itemLevel={{$charequip->waist_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->waist_icon}}.jpg"></span>
+                                @endif
+                            @else
+                            @endif
+                        @endif
+                    @endforeach
+                @else
+                    @if(count($switcheditembelt)>0)
+                        @if($switcheditembelt->needlist_switcher == '1')
+                            <span style="background: green" id="6" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditembelt->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditembelt->user_item_icon}}.jpg"></span>
+                        @else
+                            <span style="background: red;" id="6" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->waist_id}}?itemLevel={{$charequip->waist_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->waist_icon}}.jpg"></span>
+                        @endif
                     @else
                         <span style="background: red;" id="6" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->waist_id}}?itemLevel={{$charequip->waist_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->waist_icon}}.jpg"></span>
                     @endif
-                @else
-                    <span style="background: red;" id="6" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->waist_id}}?itemLevel={{$charequip->waist_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->waist_icon}}.jpg"></span>
                 @endif
             </div>
             <div id="right-item-legs">
-                @if(count($switcheditempants)>0)
-                    @if($switcheditempants->needlist_switcher == '1')
-                        <span style="background: green" id="7" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditempants->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditempants->user_item_icon}}.jpg"></span>
+                @if(request()->tempname)
+                    @foreach($explodedtempname[0][0] as $key => $tempn)
+                        @if($tempn == '7')
+                            <span style="background: blue;" id="7" data-tooltip-href="http://www.wowdb.com/items/{{$explodedtempname[0][1][$key]}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$explodedtempname[0][2][$key]}}.jpg"></span>
+                        @else
+                            <?php $search_key = array_search('7', $explodedtempname[0][0]); ?>
+                            @if($key == $search_key)
+                                @if(count($switcheditempants)>0)
+                                    @if($switcheditempants->needlist_switcher == '1')
+                                        <span style="background: green" id="7" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditempants->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditempants->user_item_icon}}.jpg"></span>
+                                    @else
+                                        <span style="background: red;" id="7" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->legs_id}}?itemLevel={{$charequip->legs_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->legs_icon}}.jpg"></span>
+                                    @endif
+                                @else
+                                        <span style="background: red;" id="7" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->legs_id}}?itemLevel={{$charequip->legs_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->legs_icon}}.jpg"></span>
+                                @endif
+                            @else
+                            @endif
+                        @endif
+                    @endforeach
+                @else
+                    @if(count($switcheditempants)>0)
+                        @if($switcheditempants->needlist_switcher == '1')
+                            <span style="background: green" id="7" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditempants->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditempants->user_item_icon}}.jpg"></span>
+                        @else
+                            <span style="background: red;" id="7" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->legs_id}}?itemLevel={{$charequip->legs_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->legs_icon}}.jpg"></span>
+                        @endif
                     @else
                         <span style="background: red;" id="7" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->legs_id}}?itemLevel={{$charequip->legs_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->legs_icon}}.jpg"></span>
                     @endif
-                @else
-                    <span style="background: red;" id="7" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->legs_id}}?itemLevel={{$charequip->legs_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->legs_icon}}.jpg"></span>
                 @endif
             </div>
             <div id="right-item-feet">
-                @if(count($switcheditemfeet)>0)
-                    @if($switcheditemfeet->needlist_switcher == '1')
-                        <span style="background: green" id="8" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditemfeet->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditemfeet->user_item_icon}}.jpg"></span>
+                @if(request()->tempname)
+                    @foreach($explodedtempname[0][0] as $key => $tempn)
+                        @if($tempn == '8')
+                            <span style="background: blue;" id="8" data-tooltip-href="http://www.wowdb.com/items/{{$explodedtempname[0][1][$key]}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$explodedtempname[0][2][$key]}}.jpg"></span>
+                        @else
+                            <?php $search_key = array_search('8', $explodedtempname[0][0]); ?>
+                            @if($key == $search_key)
+                                @if(count($switcheditemfeet)>0)
+                                    @if($switcheditemfeet->needlist_switcher == '1')
+                                        <span style="background: green" id="8" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditemfeet->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditemfeet->user_item_icon}}.jpg"></span>
+                                    @else
+                                        <span style="background: red;" id="8" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->feet_id}}?itemLevel={{$charequip->feet_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->feet_icon}}.jpg"></span>
+                                    @endif
+                                @else
+                                        <span style="background: red;" id="8" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->feet_id}}?itemLevel={{$charequip->feet_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->feet_icon}}.jpg"></span>
+                                @endif
+                            @else
+                            @endif
+                        @endif
+                    @endforeach
+                @else
+                    @if(count($switcheditemfeet)>0)
+                        @if($switcheditemfeet->needlist_switcher == '1')
+                            <span style="background: green" id="8" data-tooltip-href="http://www.wowdb.com/items/{{$switcheditemfeet->user_item_id}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$switcheditemfeet->user_item_icon}}.jpg"></span>
+                        @else
+                            <span style="background: red;" id="8" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->feet_id}}?itemLevel={{$charequip->feet_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->feet_icon}}.jpg"></span>
+                        @endif
                     @else
                         <span style="background: red;" id="8" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->feet_id}}?itemLevel={{$charequip->feet_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->feet_icon}}.jpg"></span>
                     @endif
-                @else
-                    <span style="background: red;" id="8" data-tooltip-href="http://www.wowdb.com/items/{{$charequip->feet_id}}?itemLevel={{$charequip->feet_ilvl}}"><img src="https://render-eu.worldofwarcraft.com/icons/56/{{$charequip->feet_icon}}.jpg"></span>
                 @endif
             </div>
             <div id="right-item-finger1">
@@ -229,6 +460,25 @@
         </div>
     </div>
     <div><a class="reseteq" href="#">reset equiped items</a></div>
+    <div>
+        <form id="saveeq" method="POST" action="{{route('profile.needlist.create.raid.items.template',$_GET['char'])}}" enctype="multipart/form-data">
+            <lavel for="template_name">Type name for this template</lavel>
+            <input name="template_name">
+            <div><a onclick="document.getElementById('saveeq').submit();" class="saveeq" href="#">Save template for this character</a></div>
+            {{ csrf_field() }}
+        </form>
+    </div>
+    <div>
+        Select you'r template
+        <select id="selecttemplate">
+            <option></option>
+            @foreach($raidtemplates as $raidtemplate)
+                <option value="{{$raidtemplate->id}}">
+                    {{$raidtemplate->template_name}}
+                </option>
+            @endforeach
+        </select>
+    </div>
 </div>
 
 
@@ -269,7 +519,6 @@
             <div id="pending">
                 @foreach($charsimcitem as $simcitem)
                     @if($_GET['raid'] == $simcitem->simc_raid)
-
                         @if($simcitem->simc_raid == 'The Nighthold')
                             @if(count($progressionNH)>0)
                                 @if($progressionNH->user_mythic > 0 || $progressionNH->char_ilvl > '930')
