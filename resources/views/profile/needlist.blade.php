@@ -471,7 +471,11 @@
     <div>
         Select you'r template
         <select id="selecttemplate">
-            <option></option>
+            @if(request()->tempname)
+                <option>{{\App\CharRaidTemplates::where('id',request()->tempname)->firstOrFail()->template_name}}</option>
+            @else
+                <option></option>
+            @endif
             @foreach($raidtemplates as $raidtemplate)
                 <option value="{{$raidtemplate->id}}">
                     {{$raidtemplate->template_name}}

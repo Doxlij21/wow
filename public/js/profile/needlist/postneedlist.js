@@ -41,8 +41,8 @@ $(document).ready(function() {
     });
 
     $('#selectraid').on('change', function() {
-     var raid = $("#selectraid option:selected" ).text().replace(/ /g,"%20");
-
+        var raid = $("#selectraid option:selected" ).text().replace(/ /g,"%20");
+        var char = $("#selectCharacter")[0].value.replace(/ /g,"%20");
         $("#raiditems").load('?raid=' + raid + '&char=' + char + ' #raiditems', function () {
             $.getScript('/js/profile/needlist/dragandsort.js')
         });
